@@ -53,7 +53,6 @@ public class UpgradeMenu : MonoBehaviour {
     List<Image> images = new List<Image>();
     List<Text> texts = new List<Text>();
 
-
     void Start () {
         fadeT = 0;
         positionT = 0;

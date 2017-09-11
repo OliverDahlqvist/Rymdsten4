@@ -51,6 +51,7 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     void Start () {
         fadeT = 0;
         positionT = 0;
+        colorT = 0;
 
         InfoRect = Info.GetComponent<RectTransform>();
 
@@ -93,6 +94,14 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
             + (selectedDrill.orePerTick / PlayerClass.globalTickRate) * 60 * 60;
         mats.text = "Material : " + PlayerClass.formatValue(PlayerClass.credits);
 
+        if (InfoImage.color != Color.Lerp(infoActiveColor, infoInactiveColor, colorT))   // Change Color //
+        {
+            InfoImage.color = Color.Lerp(infoActiveColor, infoInactiveColor, colorT);
+            for (int i = 0; i < InfoText.Length; i++)
+            {
+                InfoText[i].color = Color.Lerp(activeColor, inactiveColor, colorT);
+            }
+        }
     }
 
     void updateInfoPanel()
@@ -232,7 +241,7 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift))
         {
             int amountPresses = 0;
-            float totalValue = PlayerClass.UpgradeCostOxygen;
+            float totalValue = selectedDrill.upgradeCost;
             while (PlayerClass.credits > totalValue && amountPresses < 10)
             {
                 amountPresses++;
