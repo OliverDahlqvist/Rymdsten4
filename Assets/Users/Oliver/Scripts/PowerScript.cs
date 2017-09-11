@@ -30,9 +30,9 @@ public class PowerScript : MonoBehaviour {
             timestamp = Time.time + PlayerClass.globalTickRate;
             for (int i = 0; i < drills.Count; i++)
             {
-                if (drills[i].drillOn)
+                if (drills[i].drillOn && drills[i].drillAmount + drills[i].orePerTick < drills[i].drillAmountMax)
                 {
-                    PlayerClass.credits += drills[i].orePerTick;
+                    drills[i].drillAmount += drills[i].orePerTick;
                 }
             }
         }

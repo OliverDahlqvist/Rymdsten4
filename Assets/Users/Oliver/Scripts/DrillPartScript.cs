@@ -11,7 +11,8 @@ public class DrillPartScript : MonoBehaviour {
     private int drillBaseValue;
     private float drillUpdateTime = 1f;
     private float timestamp = 0f;
-    private float powerInput;
+    public float drillAmount;
+    public float drillAmountMax;
 
     public bool drillOn;
 
@@ -28,8 +29,9 @@ public class DrillPartScript : MonoBehaviour {
         ps = GetComponentInParent<ParticleSystem>();
         drillBaseValue = 10;
         drillOn = true;
-        powerInput = 100;
         drillName = gameObject.transform.parent.name;
+        drillAmount = 0;
+        drillAmountMax = 100;
 
         //Upgrades
         orePerTick = 1;

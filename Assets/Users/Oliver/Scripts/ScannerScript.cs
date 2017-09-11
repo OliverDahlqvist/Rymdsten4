@@ -44,6 +44,10 @@ public class ScannerScript : MonoBehaviour {
                 displayText = stoneHit.objectName;
                 stoneText = PlayerClass.formatValue((stoneHit.amountStones * PlayerClass.stonesPerHitLaser));
             }
+            else if (hit.collider.GetComponentInChildren<DrillPartScript>())
+            {
+                displayText = hit.collider.GetComponentInChildren<DrillPartScript>().drillName;
+            }
         }
             
         laserDisplayText.text = displayText;
