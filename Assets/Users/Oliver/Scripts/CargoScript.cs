@@ -20,7 +20,7 @@ public class CargoScript : MonoBehaviour {
     float inventoryMax;
     float inventory;
 
-    public bool droppingOff = false;
+    public bool droppingOff;
     bool isNear = false;
 
     float distanceToTarget;
@@ -36,14 +36,15 @@ public class CargoScript : MonoBehaviour {
         agent.destination = drill.transform.position;
         canvas = transform.GetChild(0).transform.GetChild(0).transform;
         notif = GetComponentInChildren<Text>();
+        droppingOff = false;
     }
 	
 	void Update () {
-		if(inventory >= inventoryMax && droppingOff == false)
+		/*if(inventory >= inventoryMax && droppingOff == false)
         {
             agent.destination = dropOff.transform.position;
             droppingOff = true;
-        }
+        }*/
 
         if (droppingOff)
         {
@@ -54,7 +55,22 @@ public class CargoScript : MonoBehaviour {
             distanceToTarget = Vector3.Distance(drill.transform.position, transform.position);
         }
 
-        if(distanceToTarget <= 15 && !PlayerClass.usingForge && droppingOff)
+        if(distanceToTarget <= 15)
+        {
+            if (!droppingOff)
+            {
+                inventory += drillScript.drillAmount;
+                drillScript.drillAmount = 0;
+            }
+            else if (!PlayerClass.usingForge)
+            {
+                forgeAnimation.openDoor = true;
+                PlayerClass.credits += inventory;
+                inventory = 0;
+            }
+        }
+
+        /*if(distanceToTarget <= 15 && !PlayerClass.usingForge && droppingOff)
         {
             forgeAnimation.openDoor = true;
             PlayerClass.credits += inventory;
@@ -66,6 +82,16 @@ public class CargoScript : MonoBehaviour {
         {
             inventory += drillScript.drillAmount;
             drillScript.drillAmount = 0;
+        }*/
+        if (inventory >= inventoryMax && !droppingOff)
+        {
+            agent.SetDestination(dropOff.transform.position);
+            droppingOff = true;
+        }
+        else if (inventory == 0 && droppingOff)
+        {
+            agent.SetDestination(drill.transform.position);
+            droppingOff = false;
         }
 
         if (isNear)
