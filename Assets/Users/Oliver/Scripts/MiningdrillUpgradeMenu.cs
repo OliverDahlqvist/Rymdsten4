@@ -14,7 +14,10 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     [SerializeField]
     Text mats;
     [SerializeField]
+    Text cargoText;
+    [SerializeField]
     GameObject Info;
+    
 
     Text[] InfoText = new Text[3];
     RectTransform InfoRect;
@@ -93,7 +96,7 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
             + selectedDrill.orePerTick / PlayerClass.globalTickRate * 60 + "\nOre/Hour: " 
             + (selectedDrill.orePerTick / PlayerClass.globalTickRate) * 60 * 60;
         mats.text = "Material : " + PlayerClass.formatValue(PlayerClass.credits);
-
+        cargoText.text = "Cargo: " + selectedDrill.drillAmount + "/" + selectedDrill.drillAmountMax;
         if (InfoImage.color != Color.Lerp(infoActiveColor, infoInactiveColor, colorT))   // Change Color //
         {
             InfoImage.color = Color.Lerp(infoActiveColor, infoInactiveColor, colorT);

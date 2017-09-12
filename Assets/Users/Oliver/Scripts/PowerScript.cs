@@ -25,7 +25,7 @@ public class PowerScript : MonoBehaviour {
         amountPowerText.text = PlayerClass.formatValue(PlayerClass.power) + "/" + PlayerClass.formatValue(PlayerClass.maxPower);
         powerSlider.value = PlayerClass.power;
 
-        if (Time.time >= timestamp)
+        /*if (Time.time >= timestamp) // REDUNDANT
         {
             timestamp = Time.time + PlayerClass.globalTickRate;
             for (int i = 0; i < drills.Count; i++)
@@ -35,7 +35,7 @@ public class PowerScript : MonoBehaviour {
                     drills[i].drillAmount += drills[i].orePerTick;
                 }
             }
-        }
+        }*/
 	}
     public void addObject(DrillPartScript obj)
     {

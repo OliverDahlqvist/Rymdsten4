@@ -13,6 +13,7 @@ public class DrillPartScript : MonoBehaviour {
     private float timestamp = 0f;
     public float drillAmount;
     public float drillAmountMax;
+    public float drillTickRate;
 
     public bool drillOn;
 
@@ -24,6 +25,7 @@ public class DrillPartScript : MonoBehaviour {
     public int currentRank;
     public float upgradeCost;
 
+
     void Start () {
         anim = GetComponent<Animator>();
         ps = GetComponentInParent<ParticleSystem>();
@@ -32,17 +34,33 @@ public class DrillPartScript : MonoBehaviour {
         drillName = gameObject.transform.parent.name;
         drillAmount = 0;
         drillAmountMax = 100;
+        drillTickRate = 1;
 
         //Upgrades
         orePerTick = 1;
         upEfficiency = 150;
         currentRank = 1;
         upgradeCost = 100;
+
     }
 
 	void Update () {
 
         anim.SetBool("drillOn", drillOn);
+
+        if (Time.time >= timestamp)
+        {
+            timestamp = Time.time + drillTickRate;
+            if (drillOn && drillAmount + orePerTick < drillAmountMax)
+            {
+                drillAmount += orePerTick;
+            }
+            else if(drillOn)
+            {
+                drillAmount = drillAmountMax;
+            }
+           
+        }
 
         if (drillOn && ps.isStopped)
         {
