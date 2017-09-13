@@ -35,6 +35,6 @@ public class SmokeParticleScript : MonoBehaviour {
 	}
     void destroySmoke()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

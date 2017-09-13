@@ -19,7 +19,7 @@ public class MiningDrillVariables : MonoBehaviour {
 
         rend = GetComponent<Renderer>();
     }
-	void Update () {
+/*	void Update () {
         if (ds.drillAmount >= ds.drillAmountMax)
         {
             if (colorT < 1) {
@@ -35,5 +35,5 @@ public class MiningDrillVariables : MonoBehaviour {
             }
             rend.materials[4].SetColor("_EmissionColor", Color.Lerp(notFull, full, colorT));
         }
-    }
+    }*/
 }

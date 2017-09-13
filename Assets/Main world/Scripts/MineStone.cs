@@ -122,8 +122,34 @@ public class MineStone : MonoBehaviour {
                 if (hit.collider.gameObject.CompareTag("MiningDrill"))
                 {
                     PlayerClass.menuActive = 2;
-                    drillUpgradeMenu.selectedDrill = hit.collider.gameObject.GetComponentInChildren<DrillPartScript>();
+                    drillUpgradeMenu.selectedDrill = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
                     drillUpgradeMenu.setSelectedName();
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Ray ray = camera.ScreenPointToRay(new Vector3(x, y, 0));
+            if (Physics.Raycast(ray, out hit, 2))
+            {
+                if (hit.collider.gameObject.CompareTag("MiningDrill"))
+                {
+                    DrillPartScript drillHit = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
+                    if (drillHit.drillAmount + PlayerClass.stones > PlayerClass.inventorySize) // IF theres too much cargo
+                    {
+                        float difference = PlayerClass.inventorySize - PlayerClass.stones;
+
+                        if (difference > 0)
+                        {
+                            PlayerClass.stones += difference;
+                            drillHit.drillAmount -= difference;
+                        }
+                    }
+                    else
+                    {
+                        PlayerClass.stones += drillHit.drillAmount;
+                        drillHit.drillAmount = 0;
+                    }
                 }
             }
         }
