@@ -50,13 +50,13 @@ public class BuildSystem : MonoBehaviour {
             {
                 projObject.transform.position = hit.point;
 
-                if (hit.collider.CompareTag("Terrain") && hit.normal.y > 0.95f)
+                if (hit.collider.CompareTag("Terrain") && hit.normal.y > 0.70f)
                 {
                     projVariables.clear = true;
                 }
                 else
                 {
-                    if (hit.normal.y < 0.95f && hit.collider.CompareTag("Terrain"))
+                    if (hit.normal.y < 0.70f && hit.collider.CompareTag("Terrain"))
                     {
                         projVariables.clear = false;
                         text = "Too steep";
