@@ -7,6 +7,9 @@ public class DrillPartScript : MonoBehaviour {
     ParticleSystem ps;
 
     [SerializeField]
+    GameObject stoneParticle;
+
+    [SerializeField]
     private int drillMultiplier;
     private int drillBaseValue;
     private float drillUpdateTime = 1f;
@@ -16,6 +19,8 @@ public class DrillPartScript : MonoBehaviour {
     public float drillTickRate;
 
     public bool drillOn;
+    public bool cargoParticles;
+    public Transform targetDrill;
 
     public string drillName;
 
@@ -24,6 +29,10 @@ public class DrillPartScript : MonoBehaviour {
     public float upEfficiency;
     public int currentRank;
     public float upgradeCost;
+
+
+
+    //public Transform cargoEmitter;
 
 
     void Start () {
@@ -35,6 +44,8 @@ public class DrillPartScript : MonoBehaviour {
         drillAmount = 0;
         drillAmountMax = 100;
         drillTickRate = 1;
+
+        cargoParticles = false;
 
         //Upgrades
         orePerTick = 1;
@@ -58,6 +69,10 @@ public class DrillPartScript : MonoBehaviour {
             else if(drillOn)
             {
                 drillAmount = drillAmountMax;
+            }
+            if (cargoParticles)
+            {
+                Instantiate(stoneParticle, transform.position, Quaternion.identity).GetComponent<FollowObject>().target = targetDrill.GetChild(0).GetChild(0);
             }
            
         }

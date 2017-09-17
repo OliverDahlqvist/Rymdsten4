@@ -24,7 +24,6 @@ public class UIScript : MonoBehaviour
     public Color ScreenColor;
     Color rockColor;
     Color oxygenColor;
-    FrostEffect frostScript;
     public RaycastHit hit;
 
     float rockT = 0;
@@ -39,7 +38,6 @@ public class UIScript : MonoBehaviour
         oxygenSlider.maxValue = PlayerClass.EnergyMax;
         oxygenSlider.value = PlayerClass.EnergyMax;
         //EnergyPercentage.text = Energy.value + "%";
-        frostScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FrostEffect>();
     }
 
 

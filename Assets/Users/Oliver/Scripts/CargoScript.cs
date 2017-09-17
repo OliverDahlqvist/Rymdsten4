@@ -61,6 +61,8 @@ public class CargoScript : MonoBehaviour {
             {
                 inventory += drillScript.drillAmount;
                 drillScript.drillAmount = 0;
+                drillScript.cargoParticles = true;
+                drillScript.targetDrill = transform;
             }
             else if (!PlayerClass.usingForge)
             {
@@ -68,6 +70,10 @@ public class CargoScript : MonoBehaviour {
                 PlayerClass.credits += inventory;
                 inventory = 0;
             }
+        }
+        else if(drillScript.cargoParticles == true)
+        {
+            drillScript.cargoParticles = false;
         }
 
         /*if(distanceToTarget <= 15 && !PlayerClass.usingForge && droppingOff)

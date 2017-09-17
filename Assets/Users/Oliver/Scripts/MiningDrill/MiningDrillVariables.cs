@@ -12,12 +12,15 @@ public class MiningDrillVariables : MonoBehaviour {
     public Color full;
     private float colorT;
 
+    
+    public AudioClip impactSound;
 
     void Start () {
         ds = GetComponentInChildren<DrillPartScript>();
         drillName = gameObject.name;
 
         rend = GetComponent<Renderer>();
+
     }
 /*	void Update () {
         if (ds.drillAmount >= ds.drillAmountMax)

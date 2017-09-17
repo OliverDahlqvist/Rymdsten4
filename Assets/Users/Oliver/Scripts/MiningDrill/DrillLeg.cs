@@ -20,10 +20,11 @@ public class DrillLeg : MonoBehaviour {
         speed = 0;
         acc = 80;
         impactSound = GetComponentInChildren<AudioSource>();
+        impactSound.clip = GetComponentInParent<MiningDrillVariables>().impactSound;
 	}
 
 	void Update () {
-        if (Physics.Raycast(startPoint, Vector3.down, out hit, 0.7f) && !locked)
+        if (Physics.Raycast(startPoint, Vector3.down, out hit, 0.7f))
         {
             if (hit.collider.CompareTag("Terrain"))
             {

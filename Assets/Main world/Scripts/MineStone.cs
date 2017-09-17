@@ -208,7 +208,6 @@ public class MineStone : MonoBehaviour {
                                 {
                                     PlayerClass.stones += PlayerClass.stonesPerHitLaser;
                                 }
-                                
                                 //stoneHit.transform.localScale -= new Vector3(Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f));
                                 stoneHit.amountStones -= 1;
 
