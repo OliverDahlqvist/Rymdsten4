@@ -7,14 +7,14 @@ public class UpdateNotification : MonoBehaviour {
     [SerializeField]
     Text notification;
     [SerializeField]
-    Text notification_shadow;
+    Image notPanel;
 
     Color notificationColor;
-    Color notification_shadowColor;
+    Color notPanelColor;
 
     void Start () {
         notificationColor = notification.color;
-        notification_shadowColor = notification_shadow.color;
+        notPanelColor = notPanel.color;
     }
 
 	void Update () {
@@ -53,15 +53,14 @@ public class UpdateNotification : MonoBehaviour {
         if (PlayerClass.textValue >= 0 || PlayerClass.textValue <= 0)
         {
             notificationColor.a = Mathf.Lerp(0, 1, PlayerClass.textValue);
-            notification_shadowColor.a = Mathf.Lerp(0, 1, PlayerClass.textValue);
-            notification_shadow.color = notification_shadowColor;
+            notPanelColor.a = Mathf.Lerp(0, 0.45f, PlayerClass.textValue);
             notification.color = notificationColor;
+            notPanel.color = notPanelColor;
         }
 
         if(notification.text != PlayerClass.notificationText)
         {
             notification.text = PlayerClass.notificationText;
-            notification_shadow.text = PlayerClass.notificationText;
         }
     }
 }
