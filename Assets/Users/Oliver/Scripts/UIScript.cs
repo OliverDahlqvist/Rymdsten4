@@ -21,6 +21,7 @@ public class UIScript : MonoBehaviour
 
     public Color defaultColor;
     public Color warningColor;
+    public Color defaultColorOxygen;
     public Color ScreenColor;
     Color rockColor;
     Color oxygenColor;
@@ -111,7 +112,7 @@ public class UIScript : MonoBehaviour
         }
 
         rockColor = Color.Lerp(defaultColor, warningColor, rockT);
-        oxygenColor = Color.Lerp(defaultColor, warningColor, oxygenT);
+        oxygenColor = Color.Lerp(defaultColorOxygen, warningColor, oxygenT);
         if(PlayerClass.stones == PlayerClass.inventorySize && rockT < 1)
         {
             rockT += Time.deltaTime;
