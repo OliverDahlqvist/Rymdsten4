@@ -35,7 +35,7 @@ public class UpdateNotification : MonoBehaviour {
         // TEXT //
         if (PlayerClass.displayNotification)
         {
-            PlayerClass.textValue += Time.deltaTime;
+            PlayerClass.textValue += Time.deltaTime * 10f;
             if (PlayerClass.textValue >= 1)
             {
                 PlayerClass.displayNotification = false;
@@ -43,7 +43,7 @@ public class UpdateNotification : MonoBehaviour {
         }
         if (!PlayerClass.displayNotification && PlayerClass.textValue > 0)
         {
-            PlayerClass.textValue -= Time.deltaTime * 2f;
+            PlayerClass.textValue -= Time.deltaTime * 10f;
         }
         if (PlayerClass.textValue < 0)
         {
