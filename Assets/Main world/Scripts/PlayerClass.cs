@@ -57,6 +57,9 @@ public static class PlayerClass
     public static string selectedDrillName;
     public static float globalTickRate = 1;
 
+    // Cargo Drones //
+    public static int amountCargoDrones = 0;
+
     // Costs //
     public static float UpgradeCostPick = 10;
     public static float UpgradeCostInventory = 50;

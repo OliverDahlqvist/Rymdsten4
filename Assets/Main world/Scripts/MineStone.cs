@@ -122,6 +122,7 @@ public class MineStone : MonoBehaviour {
                 if (hit.collider.gameObject.CompareTag("MiningDrill"))
                 {
                     PlayerClass.menuActive = 2;
+                    PlayerClass.currentMenu = 1;
                     drillUpgradeMenu.selectedDrill = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
                     drillUpgradeMenu.setSelectedName();
                 }

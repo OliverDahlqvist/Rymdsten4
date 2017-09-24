@@ -44,9 +44,17 @@ public class ScannerScript : MonoBehaviour {
                 displayText = stoneHit.objectName;
                 stoneText = PlayerClass.formatValue((stoneHit.amountStones * PlayerClass.stonesPerHitLaser));
             }
-            else if (hit.collider.GetComponentInChildren<DrillPartScript>())
+            else if (hit.collider.CompareTag("MiningDrill"))
             {
-                displayText = hit.collider.GetComponentInChildren<DrillPartScript>().drillName;
+                DrillPartScript hitDrill = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
+                displayText = hitDrill.drillName;
+                stoneText = hitDrill.drillAmount + "/" + hitDrill.drillAmountMax;
+            }
+            else if (hit.collider.CompareTag("CargoDrone"))
+            {
+                CargoScript hitDrone = hit.collider.transform.root.GetComponent<CargoScript>();
+                displayText = hitDrone.name;
+                stoneText = hitDrone.inventory + "/" + hitDrone.inventoryMax;
             }
         }
             

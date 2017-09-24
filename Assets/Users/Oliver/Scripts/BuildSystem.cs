@@ -29,7 +29,7 @@ public class BuildSystem : MonoBehaviour {
 
         x = Screen.width / 2;
         y = Screen.height / 2;
-        priceText.text = PlayerClass.formatValue(buildPrice) + "c";
+        priceText.text = PlayerClass.formatValue(buildPrice);
     }
 	
 	void Update () {

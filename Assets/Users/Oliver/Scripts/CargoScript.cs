@@ -17,8 +17,8 @@ public class CargoScript : MonoBehaviour {
     Transform canvas;
 
 
-    float inventoryMax;
-    float inventory;
+    public float inventoryMax;
+    public float inventory;
 
     public bool droppingOff;
     bool isNear = false;
@@ -30,6 +30,10 @@ public class CargoScript : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         inventoryMax = 100;
         inventory = 0;
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        dropOff = GameObject.FindGameObjectWithTag("Forge");
         forgeAnimation = dropOff.GetComponent<ForgeAnimationScript>();
         drillScript = drill.GetComponentInChildren<DrillPartScript>();
         anim = GetComponentsInChildren<Animator>()[1];

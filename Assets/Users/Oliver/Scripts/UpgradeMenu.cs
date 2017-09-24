@@ -74,7 +74,7 @@ public class UpgradeMenu : MonoBehaviour {
         {
             button.Add(GetComponentsInChildren<ButtonValues>()[i]);
         }
-        for (int i = 0; i < 4; i++) // Button Images //
+        /*for (int i = 0; i < 4; i++) // Button Images //
         {
             if(GetComponentsInChildren<Image>()[i].transform.name != "Header")
             {
@@ -87,7 +87,7 @@ public class UpgradeMenu : MonoBehaviour {
             {
                 texts.Add(GetComponentsInChildren<Text>()[i]);
             }
-        }
+        }*/
     }
 	
 	void Update () {

@@ -9,6 +9,8 @@ public class DrillPartScript : MonoBehaviour {
     [SerializeField]
     GameObject stoneParticle;
 
+    public CargoScript droneCargoScript;
+
     [SerializeField]
     private int drillMultiplier;
     private int drillBaseValue;
@@ -23,12 +25,26 @@ public class DrillPartScript : MonoBehaviour {
     public Transform targetDrill;
 
     public string drillName;
+    public string droneName;
 
     //Upgrades
     public int orePerTick;
     public float upEfficiency;
+
+
     public int currentRank;
     public float upgradeCost;
+
+
+    public float droneCost;
+
+    public int cargoRank;
+    public float upgradeCostCargo;
+
+    public float droneCargoCost;
+    public int droneCargoRank;
+
+    public bool droneBuilt;
 
 
 
@@ -41,17 +57,36 @@ public class DrillPartScript : MonoBehaviour {
         drillBaseValue = 10;
         drillOn = true;
         drillName = gameObject.transform.parent.name;
+        droneName = "Cargo Drone 01";
         drillAmount = 0;
         drillAmountMax = 100;
         drillTickRate = 1;
 
+        if (droneCargoScript == null)
+        {
+            droneBuilt = false;
+        }
+        else
+        {
+            droneBuilt = true;
+        }
+
         cargoParticles = false;
 
-        //Upgrades
+        //Upgrades & Prices
         orePerTick = 1;
         upEfficiency = 150;
+
         currentRank = 1;
         upgradeCost = 100;
+
+        droneCost = 20;
+
+        cargoRank = 1;
+        upgradeCostCargo = 100;
+
+        droneCargoRank = 1;
+        droneCargoCost = 100;
 
     }
 
@@ -72,7 +107,7 @@ public class DrillPartScript : MonoBehaviour {
             }
             if (cargoParticles)
             {
-                Instantiate(stoneParticle, transform.position, Quaternion.identity).GetComponent<FollowObject>().target = targetDrill.GetChild(0).GetChild(0);
+                Instantiate(stoneParticle, transform.position, Quaternion.Euler(-90, 0, 0)).GetComponent<FollowObject>().target = targetDrill.GetChild(0).GetChild(0);
             }
            
         }

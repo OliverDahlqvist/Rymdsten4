@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MiningdrillUpgradeMenu : MonoBehaviour {
-
     [HideInInspector]
     public string drillName;
     [SerializeField]
@@ -16,8 +15,26 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     [SerializeField]
     Text cargoText;
     [SerializeField]
+    Text cargoDroneText;
+    [SerializeField]
     GameObject Info;
-    
+    [SerializeField]
+    GameObject Efficiency;
+    [SerializeField]
+    ButtonValuesDrill PurchaseDrone;
+    [SerializeField]
+    GameObject cargoDrone;
+    [SerializeField]
+    GameObject cargo;
+    [SerializeField]
+    AudioSource sound;
+    [SerializeField]
+    Image switchIcon;
+    [SerializeField]
+    Sprite droneIcon;
+    [SerializeField]
+    Sprite drillIcon;
+
 
     Text[] InfoText = new Text[3];
     RectTransform InfoRect;
@@ -47,7 +64,7 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     Color infoInactiveColor;
 
     List<GameObject> items = new List<GameObject>();
-    List<ButtonValuesDrill> button = new List<ButtonValuesDrill>();
+    public List<ButtonValuesDrill> button = new List<ButtonValuesDrill>();
     List<Image> images = new List<Image>();
     List<Text> texts = new List<Text>();
 
@@ -72,31 +89,63 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         {
             button.Add(GetComponentsInChildren<ButtonValuesDrill>()[i]);
         }
-        for (int i = 0; i < 4; i++) // Button Images //
-        {
-            if (GetComponentsInChildren<Image>()[i].transform.name != "Header")
-            {
-                images.Add(GetComponentsInChildren<Image>()[i]);
-            }
-        }
-        for (int i = 0; i < 8; i++) //Button Texts //
-        {
-            if (GetComponentsInChildren<Text>()[i].transform.name != "Header")
-            {
-                texts.Add(GetComponentsInChildren<Text>()[i]);
-            }
-        }
     }
 	
 	void Update () {
+        if (PlayerClass.currentMenu == 2)
+        {
+            switchIcon.sprite = drillIcon;
+            Efficiency.SetActive(false);
+            if (!selectedDrill.droneBuilt)
+            {
+                PurchaseDrone.transform.gameObject.SetActive(true);
+                nameText.transform.gameObject.SetActive(false);
+                cargo.SetActive(false);
+            }
+            else
+            {
+                nameText.transform.gameObject.SetActive(true);
+
+                //PurchaseDrone.transform.gameObject.SetActive(false);
+
+                cargo.SetActive(true);
+            }
+        }
+        else if (PlayerClass.currentMenu == 1)
+        {
+            switchIcon.sprite = droneIcon;
+            Efficiency.SetActive(true);
+            PurchaseDrone.transform.gameObject.SetActive(false);
+            nameText.transform.gameObject.SetActive(true);
+            cargo.SetActive(true);
+        }
+
         updateButtons();
         updateInfoPanel();
+
         stats.text = "Tick Rate: " + PlayerClass.globalTickRate * 60 + "\nOre/Tick: " + selectedDrill.orePerTick + "\nOre/Sec: " 
             + selectedDrill.orePerTick / PlayerClass.globalTickRate + "\nOre/Min: " 
             + selectedDrill.orePerTick / PlayerClass.globalTickRate * 60 + "\nOre/Hour: " 
             + (selectedDrill.orePerTick / PlayerClass.globalTickRate) * 60 * 60;
+
         mats.text = "Material : " + PlayerClass.formatValue(PlayerClass.credits);
-        cargoText.text = "Cargo: " + selectedDrill.drillAmount + "/" + selectedDrill.drillAmountMax;
+
+        cargoText.text = selectedDrill.drillAmount + "/" + selectedDrill.drillAmountMax;
+
+        if (selectedDrill.droneBuilt)
+        {
+            cargoDroneText.text = selectedDrill.droneCargoScript.inventory + "/" + selectedDrill.droneCargoScript.inventoryMax;
+        }
+        else if(cargoDroneText.gameObject.activeSelf)
+        {
+            cargoDroneText.gameObject.SetActive(false);
+        }
+
+        if(selectedDrill.droneBuilt && !cargoDroneText.gameObject.activeSelf)
+        {
+            cargoDroneText.gameObject.SetActive(true);
+        }
+
         if (InfoImage.color != Color.Lerp(infoActiveColor, infoInactiveColor, colorT))   // Change Color //
         {
             InfoImage.color = Color.Lerp(infoActiveColor, infoInactiveColor, colorT);
@@ -129,8 +178,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
                 {
                     InfoText[i].GetComponent<CanvasRenderer>().SetAlpha(fadeT);
                 }
-
-
             }
             if (heightT < 1)
             {
@@ -179,15 +226,30 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
 
             if (!button[i].button.interactable)
             {
-                Text buttonText = button[i].GetComponentInChildren<Text>();
-                buttonText.color = inactiveColor;
+                if (button[i].GetComponentInChildren<Text>())
+                {
+                    Text buttonText = button[i].GetComponentInChildren<Text>();
+                    buttonText.color = inactiveColor;
+                }
+                else
+                {
+                    Image buttonImage = button[i].GetComponentInChildren<Image>();
+                    buttonImage.color = inactiveColor;
+                }
             }
             else
             {
-                Text buttonText = button[i].GetComponentInChildren<Text>();
-                buttonText.color = activeColor;
+                if (button[i].GetComponentInChildren<Text>())
+                {
+                    Text buttonText = button[i].GetComponentInChildren<Text>();
+                    buttonText.color = activeColor;
+                }
+                else
+                {
+                    Image buttonImage = button[i].GetComponentInChildren<Image>();
+                    buttonImage.color = activeColor;
+                }
             }
-
             if (button[i].isHover)
             {
                 hover = true;
@@ -206,37 +268,81 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
                     }
                     InfoText[0].text = "(" + (amountTimes + 1) + ") " + PlayerClass.formatValue(totalValue) + " material";
                 }
-                else
+                else if(button[i].price > 0)
                 {
                     InfoText[0].text = PlayerClass.formatValue(button[i].price) + " material";
                 }
-                if (PlayerClass.currentMenu == 1)
+                else
                 {
-                    InfoText[1].text = "Rank: " + button[i].currentRank.ToString() + "\nCurrent: " + PlayerClass.formatValue(selectedDrill.orePerTick);
-                    InfoText[2].text = button[i].desc;
+                    InfoText[0].text = "Already purchased";
                 }
-                else if (PlayerClass.currentMenu == 2)
+
+                if (button[i].prefix != "" || button[i].suffix != "")
                 {
-                    InfoText[1].text = button[i].desc;
-                    InfoText[2].text = "";
+                    if(button[i].currentRank > 0)
+                        InfoText[1].text = button[i].prefix + button[i].currentRank.ToString() + "\n" + button[i].suffix + PlayerClass.formatValue(button[i].currentValue);
+                    else
+                        InfoText[1].text = button[i].prefix + "\n" + button[i].suffix;
                 }
+                else
+                {
+                    InfoText[1].text = "Rank: " + button[i].currentRank.ToString();
+                }
+                InfoText[2].text = button[i].desc;
             }
         }
     }
 
     public void setSelectedName()
     {
-        nameText.text = selectedDrill.drillName;
+        if (PlayerClass.currentMenu == 1)
+        {
+            nameText.text = selectedDrill.drillName;
+        }
+        else
+        {
+            nameText.text = selectedDrill.droneName;
+        }
     }
 
     public void updateName()
     {
-        selectedDrill.drillName = nameText.text;
+        if (PlayerClass.currentMenu == 1)
+        {
+            selectedDrill.drillName = nameText.text;
+        }
+        else
+        {
+            selectedDrill.droneName = nameText.text;
+        }
+        sound.Play();
     }
 
     public void ExitPress()
     {
         PlayerClass.menuActive = 0;
+    }
+
+    public void BuildDronePress()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            int amountPresses = 0;
+            float totalValue = selectedDrill.upgradeCost;
+            while (PlayerClass.credits > totalValue && amountPresses < 10)
+            {
+                amountPresses++;
+                totalValue += selectedDrill.upgradeCost * Mathf.Pow(1.15f, amountPresses);
+            }
+            for (int i = 0; i < amountPresses; i++)
+            {
+                purchaseUpgrade(selectedDrill.upgradeCost, "Efficiency");
+            }
+        }
+        else
+        {
+            purchaseUpgrade(selectedDrill.upgradeCost, "Efficiency");
+        }
     }
 
     public void EfficiencyPress()
@@ -260,17 +366,98 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
             purchaseUpgrade(selectedDrill.upgradeCost, "Efficiency");
         }
     }
+    public void droneCargoPress()
+    {
+        if(PlayerClass.currentMenu == 1)
+        {
+            pressPurchase(selectedDrill.upgradeCostCargo, "Cargo");
+        }
+        else if (PlayerClass.currentMenu == 2)
+        {
+            pressPurchase(selectedDrill.droneCargoCost, "Cargo");
+        }
+    }
+    public void purchaseDronePress()
+    {
+        purchaseUpgrade(1000, "PurchaseDrone");
+    }
 
+    void pressPurchase(float price, string item)
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            int amountPresses = 0;
+            float totalValue = price;
+            while (PlayerClass.credits > totalValue && amountPresses < 10)
+            {
+                amountPresses++;
+                totalValue += price * Mathf.Pow(1.15f, amountPresses);
+            }
+            for (int i = 0; i < amountPresses; i++)
+            {
+                purchaseUpgrade(price, item);
+            }
+        }
+        else
+        {
+            purchaseUpgrade(price, item);
+        }
+    }
+
+    //Functionality
     void purchaseUpgrade(float price, string upgradeItem)
     {
-
-        if (upgradeItem == "Efficiency")
+        if (PlayerClass.currentMenu == 1)
         {
-            selectedDrill.orePerTick += 1;
-            selectedDrill.upgradeCost *= 1.15f;
-            selectedDrill.currentRank++;
+            if (upgradeItem == "Efficiency")
+            {
+                selectedDrill.orePerTick += 1;
+                selectedDrill.upgradeCost *= 1.15f;
+                selectedDrill.currentRank++;
+            }
+            else if(upgradeItem == "Cargo")
+            {
+                selectedDrill.drillAmountMax += 100;
+                selectedDrill.upgradeCostCargo *= 1.15f;
+                selectedDrill.cargoRank++;
+            }
+        }
+        else if(PlayerClass.currentMenu == 2)
+        {
+            if(upgradeItem == "Cargo")
+            {
+                selectedDrill.droneCargoScript.inventoryMax += 100;
+                selectedDrill.droneCargoCost *= 1.15f;
+                selectedDrill.droneCargoRank++;
+            }
+            if(upgradeItem == "PurchaseDrone")
+            {
+                GameObject builtDrone = Instantiate(cargoDrone, selectedDrill.transform.position, Quaternion.identity);
+                selectedDrill.droneCargoScript = builtDrone.GetComponent<CargoScript>();
+                selectedDrill.droneCargoScript.drill = selectedDrill.transform.root.gameObject;
+                selectedDrill.droneBuilt = true;
+                PlayerClass.amountCargoDrones++;
+                selectedDrill.droneName = "Cargo Drone " + PlayerClass.amountCargoDrones;
+                setSelectedName();
+                button[button.Count - 1].isHover = false;
+                PurchaseDrone.transform.gameObject.SetActive(false);
+                //PlayerClass.currentMenu = 1;
+            }
         }
         PlayerClass.credits -= price;
     }
-}
 
+    public void HeaderButton()
+    {
+        if (PlayerClass.currentMenu == 1)
+        {
+            PlayerClass.currentMenu = 2;
+            nameText.text = selectedDrill.droneName;
+        }
+        else if(PlayerClass.currentMenu == 2)
+        {
+            PlayerClass.currentMenu = 1;
+            nameText.text = selectedDrill.drillName;
+        }
+    }
+}

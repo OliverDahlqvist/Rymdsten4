@@ -7,14 +7,9 @@ public class UpdateNotification : MonoBehaviour {
     [SerializeField]
     Text notification;
     [SerializeField]
-    Image notPanel;
-
-    Color notificationColor;
-    Color notPanelColor;
+    Animator anim;
 
     void Start () {
-        notificationColor = notification.color;
-        notPanelColor = notPanel.color;
     }
 
 	void Update () {
@@ -33,7 +28,7 @@ public class UpdateNotification : MonoBehaviour {
             PlayerClass.credits += 1000000000000;
 
         // TEXT //
-        if (PlayerClass.displayNotification)
+        /*if (PlayerClass.displayNotification)
         {
             PlayerClass.textValue += Time.deltaTime * 10f;
             if (PlayerClass.textValue >= 1)
@@ -56,6 +51,16 @@ public class UpdateNotification : MonoBehaviour {
             notPanelColor.a = Mathf.Lerp(0, 0.45f, PlayerClass.textValue);
             notification.color = notificationColor;
             notPanel.color = notPanelColor;
+        }*/
+
+        if (PlayerClass.displayNotification)
+        {
+            PlayerClass.displayNotification = false;
+            anim.SetBool("displayNotification", true);
+        }
+        else
+        {
+            anim.SetBool("displayNotification", false);
         }
 
         if(notification.text != PlayerClass.notificationText)
