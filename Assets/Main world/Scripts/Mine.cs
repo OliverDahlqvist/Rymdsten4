@@ -43,7 +43,6 @@ public class Mine : MonoBehaviour {
     }
     public void Spark()
     {
-        Debug.Log("Hej");
         if (mineScript.hitStone == true && PlayerClass.stones < PlayerClass.inventorySize)
         {
             if (mineScript.hit.collider.GetComponentInParent<Stone>().CompareTag("laserRock") && !PlayerClass.blackHoleSelected)
@@ -53,7 +52,7 @@ public class Mine : MonoBehaviour {
             }
             else
             {
-                if (transform.name == "Pickaxe")
+                if (transform.name == "PickaxeModel")
                 {
                     audio.clip = hitSound[Random.Range(0, hitSound.Length)];
                 }
