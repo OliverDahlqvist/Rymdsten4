@@ -16,12 +16,10 @@ public class ButtonValuesDrill : MonoBehaviour {
     [SerializeField]
     MiningdrillUpgradeMenu upgradeScript;
     private string buttonName;
-    public string droneDesc;
 
     void Start () {
         button = GetComponent<Button>();
         buttonName = transform.name;
-        droneDesc = "Purchase a Cargo drone that will retrieve and deliver cargo from your drill to the forge.";
     }
 	void Update () {
         if (PlayerClass.currentMenu == 1)
@@ -46,53 +44,6 @@ public class ButtonValuesDrill : MonoBehaviour {
                 suffix = "Current size: ";
                 desc = "Drill cargo size: +100";
                 partsFound = true;
-            }
-        }
-        else if(PlayerClass.currentMenu == 2)
-        {
-            if (buttonName == "Cargo")
-            {
-                if (upgradeScript.selectedDrill.droneBuilt)
-                {
-                    price = upgradeScript.selectedDrill.droneCargoCost;
-                    currentRank = upgradeScript.selectedDrill.droneCargoRank;
-                    currentValue = upgradeScript.selectedDrill.droneCargoScript.inventoryMax;
-                    prefix = "Rank: ";
-                    suffix = "Current size: ";
-                    desc = "Drone cargo size: +100";
-                    partsFound = true;
-                }
-                else
-                {
-                    price = 0;
-                    currentRank = 0;
-                    currentValue = 0;
-                    prefix = "Rank: ";
-                    suffix = "Current size: ";
-                    desc = "Build a cargo drone first!";
-                    partsFound = false;
-                }
-            }
-            else if(buttonName == "PurchaseDrone")
-            {
-                if (upgradeScript.selectedDrill.droneBuilt)
-                {
-                    price = 0;
-                    currentRank = 0;
-                    prefix = "Drone already built!";
-                    suffix = "";
-                    desc = "";
-                    partsFound = false;
-                }
-                else
-                {
-                    price = 1000;
-                    currentRank = 0;
-                    prefix = "Purchase a Cargo drone that will retrieve cargo from your drill and deliver it to a forge.";
-                    suffix = "";
-                    desc = "";
-                    partsFound = true;
-                }
             }
         }
     }

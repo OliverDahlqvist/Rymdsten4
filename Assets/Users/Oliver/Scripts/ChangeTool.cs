@@ -49,7 +49,6 @@ public class ChangeTool : MonoBehaviour {
         }
 
         getCurrentTool(0);
-        lerpSpeed = 1;
     }
 	
 	void Update () {
@@ -93,13 +92,6 @@ public class ChangeTool : MonoBehaviour {
             PlayerClass.building = false;
         }
 
-
-        if (lerpSpeed < 1)
-        {
-            lerpSpeed += 0.03f;
-            activeTool.transform.localPosition = Vector3.Slerp(tools[selectedTool].startPos, tools[selectedTool].endPos, Mathf.SmoothStep(0.0f, 1.0f, lerpSpeed));
-        }
-
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
         rotationSpeed = Quaternion.Euler(-mouseY, offset - mouseX, 0);
@@ -118,12 +110,9 @@ public class ChangeTool : MonoBehaviour {
                 tools[i].gameObject.SetActive(false);
             }
         }
-        
-        lerpSpeed = 0;
 
         PlayerClass.mineLength = tools[selectedTool].mineLength;
         PlayerClass.mineRate = tools[selectedTool].mineRate;
-        offset = tools[selectedTool].offset;
 
         if (input == 1)
         {

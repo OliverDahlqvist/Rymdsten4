@@ -82,7 +82,7 @@ public class DroneMine : MonoBehaviour {
 
                 laserBeam.transform.LookAt(target.transform);
             }
-            else if(!PlayerClass.usingForge)
+            else if(!PlayerClass.usingForge && droppingOff)
             {
                 forgeAnimation.openDoor = true;
                 PlayerClass.credits += amountStones;

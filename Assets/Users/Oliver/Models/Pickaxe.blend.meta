@@ -9,19 +9,29 @@ ModelImporter:
     100002: Cylinder
     100004: Cylinder_001
     100006: //RootNode
+    100008: Pickaxe
+    100010: Pickaxe_001
     400000: Cube
     400002: Cylinder
     400004: Cylinder_001
     400006: //RootNode
+    400008: Pickaxe
+    400010: Pickaxe_001
     2300000: Cube
     2300002: Cylinder
     2300004: Cylinder_001
+    2300006: Pickaxe
+    2300008: Pickaxe_001
     3300000: Cube
     3300002: Cylinder
     3300004: Cylinder_001
+    3300006: Pickaxe
+    3300008: Pickaxe_001
     4300000: Cylinder_001
     4300002: Cube
     4300004: Cylinder
+    4300006: Pickaxe_001
+    4300008: Pickaxe
     7400000: Default Take
     9500000: //RootNode
   materials:

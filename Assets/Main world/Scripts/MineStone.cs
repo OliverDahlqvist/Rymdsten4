@@ -128,36 +128,11 @@ public class MineStone : MonoBehaviour {
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Ray ray = camera.ScreenPointToRay(new Vector3(x, y, 0));
-            if (Physics.Raycast(ray, out hit, 2))
-            {
-                if (hit.collider.gameObject.CompareTag("MiningDrill"))
-                {
-                    DrillPartScript drillHit = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
-                    if (drillHit.drillAmount + PlayerClass.stones > PlayerClass.inventorySize) // IF theres too much cargo
-                    {
-                        float difference = PlayerClass.inventorySize - PlayerClass.stones;
-
-                        if (difference > 0)
-                        {
-                            PlayerClass.stones += difference;
-                            drillHit.drillAmount -= difference;
-                        }
-                    }
-                    else
-                    {
-                        PlayerClass.stones += drillHit.drillAmount;
-                        drillHit.drillAmount = 0;
-                    }
-                }
-            }
-        }
 
         // MINE //
         if (Input.GetMouseButton(0) && PlayerClass.stones != PlayerClass.inventorySize && PlayerClass.menuActive < 1)
         {
+            //Laser
             if (PlayerClass.laserSelected && PlayerClass.stones != PlayerClass.inventorySize)
             {
                 laserBeam.gameObject.SetActive(true);
@@ -209,7 +184,6 @@ public class MineStone : MonoBehaviour {
                                 {
                                     PlayerClass.stones += PlayerClass.stonesPerHitLaser;
                                 }
-                                //stoneHit.transform.localScale -= new Vector3(Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f));
                                 stoneHit.amountStones -= 1;
 
                                 if (!PlayerClass.laserSelected)
@@ -245,7 +219,6 @@ public class MineStone : MonoBehaviour {
                     hitStone = false;
                 }
             }
-            
         }
         if(!Input.GetMouseButton(0) || !PlayerClass.laserSelected || PlayerClass.stones == PlayerClass.inventorySize)
         {

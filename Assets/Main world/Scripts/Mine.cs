@@ -22,12 +22,8 @@ public class Mine : MonoBehaviour {
     AudioSource audio;
     private int stonesToAdd;
 
-    public float cValue;
-    private bool cBool;
 
     void Start () {
-        cValue = 0;
-        cBool = false;
         animator = GetComponent<Animator>();
         mineScript = Camera.main.GetComponent<MineStone>();
         cameraShake = Camera.main.GetComponent<CameraShake>();
@@ -47,6 +43,7 @@ public class Mine : MonoBehaviour {
     }
     public void Spark()
     {
+        Debug.Log("Hej");
         if (mineScript.hitStone == true && PlayerClass.stones < PlayerClass.inventorySize)
         {
             if (mineScript.hit.collider.GetComponentInParent<Stone>().CompareTag("laserRock") && !PlayerClass.blackHoleSelected)
@@ -66,15 +63,6 @@ public class Mine : MonoBehaviour {
                 Stone stoneHit = mineScript.rayHit;
                 if (stoneHit.destroyObject == false)
                 {
-                    /*if((int)stoneHit.stonesPerHit * (int)mineScript.pickStonePerHit > stoneHit.amountStones)
-                    {
-                        stonesToAdd = (int)stoneHit.amountStones;
-                    }
-                    else
-                    {
-                        stonesToAdd = (int)stoneHit.stonesPerHit * (int)mineScript.pickStonePerHit;
-                    }*/
-
                     if (PlayerClass.stonesPerHitPick + PlayerClass.stones > PlayerClass.inventorySize)
                     {
                         PlayerClass.stones = PlayerClass.inventorySize;
@@ -91,7 +79,7 @@ public class Mine : MonoBehaviour {
                         }
                     }
 
-                    //stoneHit.transform.localScale -= new Vector3(Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f), Mathf.Clamp(stoneHit.perc, 0, 0.9f));
+                    
                     if (PlayerClass.blackHoleSelected)
                     {
                         stoneHit.amountStones = 0;
@@ -101,7 +89,6 @@ public class Mine : MonoBehaviour {
                     {
                         stoneHit.amountStones -= 1;
                     }
-                    //stoneHit.stonesPerHit * mineScript.pickStonePerHit;
 
                     Instantiate(PS_Impact, mineScript.hit.point, Quaternion.LookRotation(mineScript.hit.normal));
                     Instantiate(PS_Sparks, mineScript.hit.point, Quaternion.LookRotation(mineScript.hit.normal));
@@ -113,7 +100,6 @@ public class Mine : MonoBehaviour {
                     {
                         cameraShake.shakeDuration += 0.2f;
                     }
-                    //stoneHit.GetComponent<deformMesh>().ApplyForceOnPoint(mineScript.hit.point, 1.2f, 1f);
                 }
 
                 if (Mathf.Floor(stoneHit.amountStones) <= 0)

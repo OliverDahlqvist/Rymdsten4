@@ -15,21 +15,15 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     [SerializeField]
     Text cargoText;
     [SerializeField]
-    Text cargoDroneText;
-    [SerializeField]
     GameObject Info;
     [SerializeField]
     GameObject Efficiency;
-    [SerializeField]
-    ButtonValuesDrill PurchaseDrone;
     [SerializeField]
     GameObject cargoDrone;
     [SerializeField]
     GameObject cargo;
     [SerializeField]
     AudioSource sound;
-    [SerializeField]
-    Image switchIcon;
     [SerializeField]
     Sprite droneIcon;
     [SerializeField]
@@ -92,33 +86,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     }
 	
 	void Update () {
-        if (PlayerClass.currentMenu == 2)
-        {
-            switchIcon.sprite = drillIcon;
-            Efficiency.SetActive(false);
-            if (!selectedDrill.droneBuilt)
-            {
-                PurchaseDrone.transform.gameObject.SetActive(true);
-                nameText.transform.gameObject.SetActive(false);
-                cargo.SetActive(false);
-            }
-            else
-            {
-                nameText.transform.gameObject.SetActive(true);
-
-                //PurchaseDrone.transform.gameObject.SetActive(false);
-
-                cargo.SetActive(true);
-            }
-        }
-        else if (PlayerClass.currentMenu == 1)
-        {
-            switchIcon.sprite = droneIcon;
-            Efficiency.SetActive(true);
-            PurchaseDrone.transform.gameObject.SetActive(false);
-            nameText.transform.gameObject.SetActive(true);
-            cargo.SetActive(true);
-        }
 
         updateButtons();
         updateInfoPanel();
@@ -131,20 +98,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         mats.text = "Material : " + PlayerClass.formatValue(PlayerClass.credits);
 
         cargoText.text = selectedDrill.drillAmount + "/" + selectedDrill.drillAmountMax;
-
-        if (selectedDrill.droneBuilt)
-        {
-            cargoDroneText.text = selectedDrill.droneCargoScript.inventory + "/" + selectedDrill.droneCargoScript.inventoryMax;
-        }
-        else if(cargoDroneText.gameObject.activeSelf)
-        {
-            cargoDroneText.gameObject.SetActive(false);
-        }
-
-        if(selectedDrill.droneBuilt && !cargoDroneText.gameObject.activeSelf)
-        {
-            cargoDroneText.gameObject.SetActive(true);
-        }
 
         if (InfoImage.color != Color.Lerp(infoActiveColor, infoInactiveColor, colorT))   // Change Color //
         {
@@ -420,28 +373,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
                 selectedDrill.drillAmountMax += 100;
                 selectedDrill.upgradeCostCargo *= 1.15f;
                 selectedDrill.cargoRank++;
-            }
-        }
-        else if(PlayerClass.currentMenu == 2)
-        {
-            if(upgradeItem == "Cargo")
-            {
-                selectedDrill.droneCargoScript.inventoryMax += 100;
-                selectedDrill.droneCargoCost *= 1.15f;
-                selectedDrill.droneCargoRank++;
-            }
-            if(upgradeItem == "PurchaseDrone")
-            {
-                GameObject builtDrone = Instantiate(cargoDrone, selectedDrill.transform.position, Quaternion.identity);
-                selectedDrill.droneCargoScript = builtDrone.GetComponent<CargoScript>();
-                selectedDrill.droneCargoScript.drill = selectedDrill.transform.root.gameObject;
-                selectedDrill.droneBuilt = true;
-                PlayerClass.amountCargoDrones++;
-                selectedDrill.droneName = "Cargo Drone " + PlayerClass.amountCargoDrones;
-                setSelectedName();
-                button[button.Count - 1].isHover = false;
-                PurchaseDrone.transform.gameObject.SetActive(false);
-                //PlayerClass.currentMenu = 1;
             }
         }
         PlayerClass.credits -= price;
