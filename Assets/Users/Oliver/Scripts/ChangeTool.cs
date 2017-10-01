@@ -14,6 +14,7 @@ public class ChangeTool : MonoBehaviour {
     public GameObject activeTool;
     private GameObject secondTool;
 
+
     [SerializeField]
     private List<ToolVariables> tools = new List<ToolVariables>();
     private int selectedTool;
@@ -25,14 +26,6 @@ public class ChangeTool : MonoBehaviour {
     public int tool2 = 1;
     public int tool3 = 2;
     public int tool4 = 3;
-    
-    /*private Vector3 startPosPick;
-    private Vector3 startPosLaser;
-    private Vector3 endPosPick;
-    private Vector3 endPosLaser;
-    private Vector3 startPos;
-    private Vector3 endPos;
-    private Vector3 endPosSunEater;*/
 
     [SerializeField]
     private GameObject pick;
@@ -68,11 +61,6 @@ public class ChangeTool : MonoBehaviour {
             getCurrentTool(tool3);
             lastInput = tool3;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && lastInput != tool4)
-        {
-            getCurrentTool(tool4);
-            lastInput = tool4;
-        }
         else if (Input.GetKeyDown(KeyCode.B))
         {
             buildActive = !buildActive;
@@ -82,11 +70,11 @@ public class ChangeTool : MonoBehaviour {
             }
             else
             {
-                getCurrentTool(4);
+                getCurrentTool(3);
             }
         }
 
-        if(selectedTool < 4)
+        if(selectedTool < 3)
         {
             buildActive = false;
             PlayerClass.building = false;

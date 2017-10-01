@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 public class Mine : MonoBehaviour {
 
-    
-    //public GameObject Camera;
     MineStone mineScript;
     CameraShake cameraShake;
 
-    [SerializeField]
-    GameObject PS_Sparks;
+    public GameObject[] particleSystems;
+    /*public GameObject PS_Sparks;
+    public GameObject PS_Impact;
+    public GameObject PS_Light;*/
+
+    [Header("Sounds")]
     [SerializeField]
     Text notificationText;
-
-
-    public GameObject PS_Impact;
     Animator animator;
     public AudioClip[] hitSound;
     AudioSource audio;
@@ -89,8 +88,11 @@ public class Mine : MonoBehaviour {
                         stoneHit.amountStones -= 1;
                     }
 
-                    Instantiate(PS_Impact, mineScript.hit.point, Quaternion.LookRotation(mineScript.hit.normal));
-                    Instantiate(PS_Sparks, mineScript.hit.point, Quaternion.LookRotation(mineScript.hit.normal));
+                    for (int i = 0; i < particleSystems.Length; i++)
+                    {
+                        Instantiate(particleSystems[i], mineScript.hit.point, Quaternion.LookRotation(mineScript.hit.normal));
+                    }
+                    
                     if (PlayerClass.blackHoleSelected)
                     {
                         cameraShake.shakeDuration += 1f;

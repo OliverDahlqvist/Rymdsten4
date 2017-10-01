@@ -18,86 +18,93 @@ public class BuildSystem : MonoBehaviour {
     private int x;
     private int y;
     string text;
-    public float buildPrice = 100;
+    public float buildPrice;
 
 
     bool projExists = false;
 
     void Start () {
         //uiScript = GetComponent<UIScript>();
-        cam = GetComponent<Camera>();
+        cam = Camera.main;
 
         x = Screen.width / 2;
         y = Screen.height / 2;
-        priceText.text = PlayerClass.formatValue(buildPrice);
+        priceText.text = PlayerClass.formatValue(buildPrice) + "/" + PlayerClass.formatValue(PlayerClass.credits);
     }
-	
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.B))
+
+    void OnDisable()
+    {
+        //PlayerClass.building = !PlayerClass.building;
+        Destroy(projObject.gameObject);
+        projExists = false;
+    }
+
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.B)) {
             PlayerClass.building = !PlayerClass.building;
+            Destroy(projObject.gameObject);
+            projExists = false;
+        }
 
-        if (PlayerClass.building)
+        if (!projExists)
         {
-            if (!projExists)
+            projObject = Instantiate(projPrefab, hit.point, Quaternion.Euler(-90, 0, 0));
+            projVariables = projObject.transform.GetComponent<ProjectionScript>();
+            projExists = true;
+        }
+
+        Ray ray = cam.ScreenPointToRay(new Vector3(x, y, 0));
+        if(Physics.Raycast(ray, out hit, 10))
+        {
+            projObject.transform.position = hit.point;
+
+            if (hit.collider.CompareTag("Terrain") && hit.normal.y > 0.70f)
             {
-                projObject = Instantiate(projPrefab, hit.point, Quaternion.Euler(-90, 0, 0));
-                projVariables = projObject.transform.GetComponent<ProjectionScript>();
-                projExists = true;
+                projVariables.clear = true;
             }
-
-            Ray ray = cam.ScreenPointToRay(new Vector3(x, y, 0));
-            if(Physics.Raycast(ray, out hit, 10))
+            else
             {
-                projObject.transform.position = hit.point;
-
-                if (hit.collider.CompareTag("Terrain") && hit.normal.y > 0.70f)
+                if (hit.normal.y < 0.70f && hit.collider.CompareTag("Terrain"))
                 {
-                    projVariables.clear = true;
+                    projVariables.clear = false;
+                    text = "Too steep";
+                    Debug.Log(text + ": Too steep");
+                    PlayerClass.notificationText = text;
+                    PlayerClass.displayNotification = true;
                 }
-                else
-                {
-                    if (hit.normal.y < 0.70f && hit.collider.CompareTag("Terrain"))
-                    {
-                        projVariables.clear = false;
-                        text = "Too steep";
-                        Debug.Log(text + ": Too steep");
-                        PlayerClass.notificationText = text;
-                        PlayerClass.displayNotification = true;
-                    }
-                }    
-            }
-            else if(projExists)
-            {
-                projObject.transform.position = ray.origin + (cam.transform.forward * 10);
-                projVariables.clear = false;
-                text = "Not touching ground";
-                PlayerClass.notificationText = text;
-                PlayerClass.displayNotification = true;
-            }
-
-            if(projVariables.objectList.Count > 0)
-            {
-                text = "Object in the way";
-                PlayerClass.notificationText = text;
-                PlayerClass.displayNotification = true;
-            }
-
-            if (Input.GetMouseButtonDown(0) && projVariables.clear && projVariables.objectList.Count == 0 && PlayerClass.credits >= buildPrice)
-            {
-                lastDrill = Instantiate(drillObject, projObject.transform.position, projObject.transform.localRotation * Quaternion.Euler(90, 0, 0));
-                powerScript.addObject(lastDrill.GetComponentInChildren<DrillPartScript>());
-                PlayerClass.amountDrills++;
-                lastDrill.GetComponentInChildren<ParticleSystem>().name = "Mining Drill " + PlayerClass.amountDrills;
-                //powerScript.addObject(Instantiate(drillObject, projObject.transform.position, projObject.transform.localRotation).GetComponent<DrillPartScript>());
-                PlayerClass.credits -= buildPrice;
-                priceText.text = PlayerClass.formatValue(buildPrice) + "c";
-                
-            }
+            }    
         }
         else if(projExists)
         {
-            Destroy(projObject.gameObject);
-            projExists = false;
+            projObject.transform.position = ray.origin + (cam.transform.forward * 10);
+            projVariables.clear = false;
+            text = "Not touching ground";
+            PlayerClass.notificationText = text;
+            PlayerClass.displayNotification = true;
+        }
+
+        if(projVariables.objectList.Count > 0)
+        {
+            text = "Object in the way";
+            PlayerClass.notificationText = text;
+            PlayerClass.displayNotification = true;
+        }
+
+        if (Input.GetMouseButtonDown(0) && projVariables.clear && projVariables.objectList.Count == 0 && PlayerClass.credits >= buildPrice)
+        {
+            lastDrill = Instantiate(drillObject, projObject.transform.position, projObject.transform.localRotation * Quaternion.Euler(90, 0, 0));
+            powerScript.addObject(lastDrill.GetComponentInChildren<DrillPartScript>());
+            PlayerClass.amountDrills++;
+            lastDrill.GetComponentInChildren<ParticleSystem>().name = "Mining Drill " + PlayerClass.amountDrills;
+            PlayerClass.credits -= buildPrice;
+
+            if (buildPrice > PlayerClass.credits)
+            {
+                priceText.text = "Not enough material";
+            }
+            else
+            priceText.text = PlayerClass.formatValue(buildPrice) + "/" + PlayerClass.formatValue(PlayerClass.credits);
+                
         }
 	}
 }

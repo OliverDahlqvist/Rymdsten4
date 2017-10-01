@@ -9,24 +9,33 @@ public class UIScript : MonoBehaviour
     //Variables for the character
 
     //public bool Inbounds = false;
+    [Header("UI Elements")]
     public Slider oxygenSlider;
     public Text oxygenText;
     public Image oxygenTexture;
     public Image iconOre;
     public Text amountOre;
     public Text amountMaterial;
-    public Text notifications;
-    public Text notificationsShadow;
     public Image Visor;
 
+    [Header("UI Colors")]
     public Color defaultColor;
     public Color warningColor;
     public Color defaultColorOxygen;
     public Color ScreenColor;
+
+    [Header("Light Colors")]
+    public Color[] lightColor;
+
+    [Header("Objects")]
+    public Light mainLight;
     Color rockColor;
     Color oxygenColor;
     public RaycastHit hit;
 
+    bool inCave = false;
+    float lightT = 1;
+    float lightIntensity = 1;
     float rockT = 0;
     float oxygenT = 0;
     string warning = "";
@@ -52,15 +61,15 @@ public class UIScript : MonoBehaviour
         {
             PlayerClass.Inbounds = false;
         }
-        if (other.tag == "CanBeActivated")
+        else if(other.tag == "CaveEnter")
         {
-            PlayerClass.notificationText = "Press 'E' To activate";
+            inCave = true;
         }
-
+        else if(other.tag == "CaveExit")
+        {
+            inCave = false;
+        }
     }
-
-
-
 
     void OnTriggerExit(Collider other)
     {
@@ -68,15 +77,9 @@ public class UIScript : MonoBehaviour
         {
             PlayerClass.Inbounds = false;
         }
-        if (other.tag == "CanBeActivated")
-        {
-            notifications.text = "";
-        }
         ScreenColor = new Color(0, 0, 0, 0);
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y, 0));
@@ -93,20 +96,33 @@ public class UIScript : MonoBehaviour
                 }
             }
         }
-        /*ActivationButton_Shadow.text = ActivationButton.text;
-        ActivationButton_Shadow.fontSize = ActivationButton.fontSize;*/
+        if (inCave) // IN CAVE
+        {
+            if (lightT > 0)
+            {
+                lightT -= Time.deltaTime;
+                mainLight.color = Color.Lerp(lightColor[1], lightColor[0], lightT);
+            }
+        }
+        else if(!inCave)
+        {
+            if (lightT < 1)
+            {
+                lightT += Time.deltaTime;
+                mainLight.color = Color.Lerp(lightColor[1], lightColor[0], lightT);
+            }
+        }
 
-
-        if (!PlayerClass.Inbounds) //If the character isn't inside a house
+        if (!PlayerClass.Inbounds) // INSIDE
         {
             PlayerClass.CurrentEnergy -= Time.deltaTime * (PlayerClass.EnergyDrain * PlayerClass.TemperatureMultipier + PlayerClass.flashLightDrain + PlayerClass.jetPackDrain + PlayerClass.fallDmgDrain); //Energy is drained depending on where the player is. 
         }
         else if (PlayerClass.Inbounds && oxygenSlider.value <= PlayerClass.EnergyMax)
         {
-            PlayerClass.CurrentEnergy += Time.deltaTime * PlayerClass.EnergyGain; //If the player is inside a house the energy increases the energy gained 
+            PlayerClass.CurrentEnergy += Time.deltaTime * PlayerClass.EnergyGain;
         }
 
-        if (PlayerClass.CurrentEnergy > PlayerClass.EnergyMax) //Prevents energy from going higher than 100 
+        if (PlayerClass.CurrentEnergy > PlayerClass.EnergyMax)
         {
             PlayerClass.CurrentEnergy = PlayerClass.EnergyMax;
         }

@@ -100,10 +100,10 @@ public class Movement : MonoBehaviour {
         }
 
         //Walk/Run
-        if (controller.isGrounded && Input.GetKey(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift)) {
             moveSpeed = runSpeed;
         }
-        else if (!controller.isGrounded){
+        else{
             moveSpeed = walkSpeed;
         }
 
@@ -130,7 +130,7 @@ public class Movement : MonoBehaviour {
             flashLight.enabled = !flashLight.enabled;
         }
         if (flashLight.enabled) {
-            PlayerClass.flashLightDrain = playerFlashLightDrain;
+            PlayerClass.flashLightDrain = -1;
         }
         else {
             PlayerClass.flashLightDrain = 0;
@@ -182,11 +182,11 @@ public class Movement : MonoBehaviour {
         playerCam.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         transform.localRotation = Quaternion.AngleAxis(mouseLook.x, transform.up);
     }
-
+    /*
     void OnControllerColliderHit(ControllerColliderHit hit) {
 
         Vector3 temp = Vector3.Cross(hit.normal, Vector3.down);
         groundSlopeDir = Vector3.Cross(temp, hit.normal);
         groundSlopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-    }
+    }*/
 }

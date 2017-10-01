@@ -12,7 +12,7 @@ public class ProjectionScript : MonoBehaviour {
 	void Start () {
         clear = true;
         mat = GetComponent<Renderer>().material;
-        buildSystem = Camera.main.GetComponent<BuildSystem>();
+        buildSystem = Camera.main.GetComponentInChildren<BuildSystem>();
 	}
     private void Update()
     {

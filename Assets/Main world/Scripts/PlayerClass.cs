@@ -16,7 +16,7 @@ public static class PlayerClass
 
     //public static float Credits = 0;
 
-    public static bool Inbounds = false;
+    public static bool Inbounds;
     public static float fallDmgDrain = 0;
     public static float flashLightDrain = 0;
     public static float jetPackDrain = 0;
