@@ -10,24 +10,25 @@ public class DayNightCycle : MonoBehaviour {
     [SerializeField] private float timeMultiplier = 1f;
 
 	private Light dr_Light;
-
+    
     private float sunInitialIntensity;
 	public float exposureIntensity = 0;
 
+    public DeepSky.Haze.DS_HazeCore deepSky;
+
     // Start
     void Start () {
-
         sunInitialIntensity = sun.intensity;
 		dr_Light = GameObject.FindWithTag("DirectionalLight").GetComponent<Light>();
     }
 
     // Update
     void Update () {
-
+        
         UpdateSun();
-
+        
         currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
-
+        deepSky.Time = currentTimeOfDay;
         if (currentTimeOfDay >= 1)
             currentTimeOfDay = 0;
 
@@ -41,10 +42,10 @@ public class DayNightCycle : MonoBehaviour {
 
         float intensityMultiplier = 1;
 
-		// night
+		/*// night
         if (currentTimeOfDay <= 0.23f || currentTimeOfDay >= 0.75f) {
 
-            intensityMultiplier = 0;
+            intensityMultiplier = 1;
 			dr_Light.enabled = true;
 
             if (!PlayerClass.duringNight) {
@@ -70,7 +71,7 @@ public class DayNightCycle : MonoBehaviour {
 			
 			intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
 			dr_Light.enabled = true;
-        }
+        }*/
 
         sun.intensity = sunInitialIntensity * intensityMultiplier;
     }
