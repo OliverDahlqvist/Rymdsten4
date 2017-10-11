@@ -18,25 +18,6 @@ public class MiningDrillVariables : MonoBehaviour {
     void Start () {
         ds = GetComponentInChildren<DrillPartScript>();
         drillName = gameObject.name;
-
         rend = GetComponent<Renderer>();
-
     }
-/*	void Update () {
-        if (ds.drillAmount >= ds.drillAmountMax)
-        {
-            if (colorT < 1) {
-                colorT += Time.deltaTime * 6;
-            }
-            rend.materials[4].SetColor("_EmissionColor", Color.Lerp(notFull, full, colorT));
-        }
-        else
-        {
-            if (colorT > 0)
-            {
-                colorT -= Time.deltaTime * 6;
-            }
-            rend.materials[4].SetColor("_EmissionColor", Color.Lerp(notFull, full, colorT));
-        }
-    }*/
 }

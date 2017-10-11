@@ -50,7 +50,7 @@ public class CargoScript : MonoBehaviour {
             droppingOff = true;
         }*/
 
-        if (droppingOff)
+        /*if (droppingOff)
         {
             distanceToTarget = Vector3.Distance(dropOff.transform.position, transform.position);
         }

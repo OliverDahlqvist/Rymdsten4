@@ -93,7 +93,6 @@ public class BuildSystem : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && projVariables.clear && projVariables.objectList.Count == 0 && PlayerClass.credits >= buildPrice)
         {
             lastDrill = Instantiate(drillObject, projObject.transform.position, projObject.transform.localRotation * Quaternion.Euler(90, 0, 0));
-            powerScript.addObject(lastDrill.GetComponentInChildren<DrillPartScript>());
             PlayerClass.amountDrills++;
             lastDrill.GetComponentInChildren<ParticleSystem>().name = "Mining Drill " + PlayerClass.amountDrills;
             PlayerClass.credits -= buildPrice;

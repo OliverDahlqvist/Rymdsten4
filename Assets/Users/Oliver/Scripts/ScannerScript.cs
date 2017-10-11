@@ -48,7 +48,6 @@ public class ScannerScript : MonoBehaviour {
             {
                 DrillPartScript hitDrill = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
                 displayText = hitDrill.drillName;
-                stoneText = hitDrill.drillAmount + "/" + hitDrill.drillAmountMax;
             }
             else if (hit.collider.CompareTag("CargoDrone"))
             {

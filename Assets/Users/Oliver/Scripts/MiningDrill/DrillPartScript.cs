@@ -6,46 +6,21 @@ public class DrillPartScript : MonoBehaviour {
     Animator anim;
     ParticleSystem ps;
 
-    [SerializeField]
-    GameObject stoneParticle;
-
-    public CargoScript droneCargoScript;
-
-    [SerializeField]
-    private int drillMultiplier;
-    private int drillBaseValue;
     private float drillUpdateTime = 1f;
     private float timestamp = 0f;
-    public float drillAmount;
-    public float drillAmountMax;
-    public float drillTickRate;
 
     public bool drillOn;
-    public bool cargoParticles;
-    public Transform targetDrill;
 
     public string drillName;
-    public string droneName;
 
+    public float speed;
+    public float yield;
     //Upgrades
-    public int orePerTick;
-    public float upEfficiency;
+    public float[] price;
+    public float[] upgrade;
 
-
-    public int currentRank;
-    public float upgradeCost;
-
-
-    public float droneCost;
-
-    public int cargoRank;
-    public float upgradeCostCargo;
-
-    public float droneCargoCost;
-    public int droneCargoRank;
-
-    public bool droneBuilt;
-
+    public int rankSpeed;
+    public int rankYield;
 
 
     //public Transform cargoEmitter;
@@ -54,62 +29,35 @@ public class DrillPartScript : MonoBehaviour {
     void Start () {
         anim = GetComponent<Animator>();
         ps = GetComponentInParent<ParticleSystem>();
-        drillBaseValue = 10;
         drillOn = true;
         drillName = gameObject.transform.parent.name;
-        droneName = "Cargo Drone 01";
-        drillAmount = 0;
-        drillAmountMax = 100;
-        drillTickRate = 1;
 
-        if (droneCargoScript == null)
-        {
-            droneBuilt = false;
-        }
-        else
-        {
-            droneBuilt = true;
-        }
+        price = new float[2];
+        upgrade = new float[2];
 
-        cargoParticles = false;
+        price[0] = 100;
+        price[1] = 10;
+        upgrade[0] = 1;
+        upgrade[1] = 1;
+
+        speed = 1f;
+        rankSpeed = 1;
+        yield = 1;
 
         //Upgrades & Prices
-        orePerTick = 1;
-        upEfficiency = 150;
-
-        currentRank = 1;
-        upgradeCost = 100;
-
-        droneCost = 20;
-
-        cargoRank = 1;
-        upgradeCostCargo = 100;
-
-        droneCargoRank = 1;
-        droneCargoCost = 100;
-
     }
 
 	void Update () {
 
         anim.SetBool("drillOn", drillOn);
-
-        if (Time.time >= timestamp)
+        if (drillOn)
         {
-            timestamp = Time.time + drillTickRate;
-            if (drillOn && drillAmount + orePerTick < drillAmountMax)
+            if (Time.time >= timestamp)
             {
-                drillAmount += orePerTick;
+                timestamp = Time.time + upgrade[0];
+
+                PlayerClass.credits += upgrade[1];
             }
-            else if(drillOn)
-            {
-                drillAmount = drillAmountMax;
-            }
-            if (cargoParticles)
-            {
-                Instantiate(stoneParticle, transform.position, Quaternion.Euler(-90, 0, 0)).GetComponent<FollowObject>().target = targetDrill.GetChild(0).GetChild(0);
-            }
-           
         }
 
         if (drillOn && ps.isStopped)
@@ -121,4 +69,23 @@ public class DrillPartScript : MonoBehaviour {
             ps.Stop();
         }
 	}
+
+    public void PurchaseUpgrade(int i)
+    {
+        PlayerClass.credits -= price[i];
+        price[i] *= 1.10f;
+
+        switch (i)
+        {
+            case 0:
+                upgrade[i] -= 0.1f;
+                break;
+            case 1:
+                upgrade[i] += 1;
+                break;
+            default:
+                Debug.Log("Error");
+                break;
+        }
+    }
 }

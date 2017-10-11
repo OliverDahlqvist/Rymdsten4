@@ -11,16 +11,9 @@ public class DayNightCycle : MonoBehaviour {
 
 	private Light dr_Light;
     
-    private float sunInitialIntensity;
 	public float exposureIntensity = 0;
 
     public DeepSky.Haze.DS_HazeCore deepSky;
-
-    // Start
-    void Start () {
-        sunInitialIntensity = sun.intensity;
-		dr_Light = GameObject.FindWithTag("DirectionalLight").GetComponent<Light>();
-    }
 
     // Update
     void Update () {
@@ -31,8 +24,6 @@ public class DayNightCycle : MonoBehaviour {
         deepSky.Time = currentTimeOfDay;
         if (currentTimeOfDay >= 1)
             currentTimeOfDay = 0;
-
-        //print("Day : " + (PlayerClass.duringDay));
     }
 
     // UpdateSun
@@ -40,39 +31,13 @@ public class DayNightCycle : MonoBehaviour {
 
         sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 360f) - 90, 170, 0);
 
-        float intensityMultiplier = 1;
-
-		/*// night
-        if (currentTimeOfDay <= 0.23f || currentTimeOfDay >= 0.75f) {
-
-            intensityMultiplier = 1;
-			dr_Light.enabled = true;
-
-            if (!PlayerClass.duringNight) {
-
-                PlayerClass.duringNight = true;
-                PlayerClass.duringDay = false;
-            }
-                
+		// night
+        if (currentTimeOfDay <= 0.25f || currentTimeOfDay >= 0.8f) {
+			sun.enabled = false;
         }// day
-        else if (currentTimeOfDay <= 0.25f) {
-			
-            intensityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
-			dr_Light.enabled = true;
-
-            if (!PlayerClass.duringDay) {
-
-                PlayerClass.duringDay = true;
-                PlayerClass.duringNight = false;
-            }
-                
-        }// transition
-        else if (currentTimeOfDay >= 0.73f) {
-			
-			intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
-			dr_Light.enabled = true;
-        }*/
-
-        sun.intensity = sunInitialIntensity * intensityMultiplier;
+        else
+        {
+            sun.enabled = true;
+        }
     }
 }
