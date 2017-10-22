@@ -92,7 +92,7 @@ public class enterVehicle : MonoBehaviour
             /*Debug.Log(player.transform.parent);*/
         }
 
-        else if (Input.GetKeyDown(KeyCode.E) && !PlayerClass.inVehicle && Inbounds && PlayerClass.CarRepaired == true && !PlayerClass.activeMenu)
+        /*else if (Input.GetKeyDown(KeyCode.E) && !PlayerClass.inVehicle && Inbounds && PlayerClass.CarRepaired == true && !PlayerClass.activeMenu)
         {
             audioListener.enabled = true;
             steeringScript.enabled = true;
@@ -109,6 +109,6 @@ public class enterVehicle : MonoBehaviour
             player.SetActive(false);
             PlayerClass.inVehicle = true;
             Inbounds = false; 
-        }
+        }*/
     }
 }

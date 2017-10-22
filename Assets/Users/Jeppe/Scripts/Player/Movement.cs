@@ -108,13 +108,13 @@ public class Movement : MonoBehaviour {
         }
 
         //Jump
-        if (controller.isGrounded && !jetPackOnOff && groundSlopeAngle < 40 && Input.GetKeyDown(KeyCode.Space))
+        if (controller.isGrounded && !jetPackOnOff && groundSlopeAngle < 40 && Input.GetKey(KeyCode.Space))
         {
             yVelocity += jumpForce;
         }
 
         //Jetpack
-        if (PlayerClass.JetpackBuilt && Input.GetKeyDown(KeyCode.J)) {
+        /*if (PlayerClass.JetpackBuilt && Input.GetKeyDown(KeyCode.J)) {
             jetPackOnOff = !jetPackOnOff;
         }
         if (jetPackOnOff && Input.GetKey(KeyCode.Space)) {
@@ -123,7 +123,7 @@ public class Movement : MonoBehaviour {
         }
         else {
             PlayerClass.jetPackDrain = 0;
-        }
+        }*/
 
         //Flashlight
         if (Input.GetKeyDown(KeyCode.F)) {
@@ -135,7 +135,7 @@ public class Movement : MonoBehaviour {
         else {
             PlayerClass.flashLightDrain = 0;
         }
-
+        /*
         //Falldamage
         if (!controller.isGrounded) {
 
@@ -158,7 +158,7 @@ public class Movement : MonoBehaviour {
         if (PlayerClass.fallDmgDrain < 0) {
             //Debug.Log(PlayerClass.fallDmgDrain);
         }
-
+        */
         //Look
         MouseLook();
 

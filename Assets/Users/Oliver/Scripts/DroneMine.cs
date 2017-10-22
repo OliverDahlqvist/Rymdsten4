@@ -27,7 +27,6 @@ public class DroneMine : MonoBehaviour {
     float amountStones = -1;
     float amountStonesPerHit = 1;
 
-
 	void Start () {
         agent = GetComponent<NavMeshAgent>();
         forgeAnimation = dropOff.GetComponent<ForgeAnimationScript>();
@@ -81,6 +80,7 @@ public class DroneMine : MonoBehaviour {
                 }
 
                 laserBeam.transform.LookAt(target.transform);
+                laserBeam.transform.localScale = new Vector3(1, 1, distanceToTarget);
             }
             else if(!PlayerClass.usingForge && droppingOff)
             {

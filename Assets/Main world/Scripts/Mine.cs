@@ -25,7 +25,7 @@ public class Mine : MonoBehaviour {
     void Start () {
         animator = GetComponent<Animator>();
         mineScript = Camera.main.GetComponent<MineStone>();
-        cameraShake = Camera.main.GetComponent<CameraShake>();
+        cameraShake = Camera.main.GetComponentInChildren<CameraShake>();
         audio = GetComponent<AudioSource>();
 	}
 	void Update () {
@@ -95,11 +95,11 @@ public class Mine : MonoBehaviour {
                     
                     if (PlayerClass.blackHoleSelected)
                     {
-                        cameraShake.shakeDuration += 1f;
+                        cameraShake.AddShake(1);
                     }
                     else
                     {
-                        cameraShake.shakeDuration += 0.2f;
+                        cameraShake.AddShake(0.2f);
                     }
                 }
 

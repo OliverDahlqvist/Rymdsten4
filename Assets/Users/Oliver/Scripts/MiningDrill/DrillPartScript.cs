@@ -8,23 +8,16 @@ public class DrillPartScript : MonoBehaviour {
 
     private float drillUpdateTime = 1f;
     private float timestamp = 0f;
-
-    public bool drillOn;
-
+    private bool drillOn;
     public string drillName;
 
     public float speed;
     public float yield;
+
     //Upgrades
     public float[] price;
     public float[] upgrade;
-
-    public int rankSpeed;
-    public int rankYield;
-
-
-    //public Transform cargoEmitter;
-
+    public int[] rank;
 
     void Start () {
         anim = GetComponent<Animator>();
@@ -32,19 +25,9 @@ public class DrillPartScript : MonoBehaviour {
         drillOn = true;
         drillName = gameObject.transform.parent.name;
 
-        price = new float[2];
-        upgrade = new float[2];
-
-        price[0] = 100;
-        price[1] = 10;
-        upgrade[0] = 1;
-        upgrade[1] = 1;
-
-        speed = 1f;
-        rankSpeed = 1;
-        yield = 1;
-
-        //Upgrades & Prices
+        price = new float[3] { 100, 10, 1000};
+        upgrade = new float[3] { 1, 1, 10};
+        rank = new int[3] { 1, 1, 1};
     }
 
 	void Update () {
@@ -73,19 +56,27 @@ public class DrillPartScript : MonoBehaviour {
     public void PurchaseUpgrade(int i)
     {
         PlayerClass.credits -= price[i];
-        price[i] *= 1.10f;
+        float priceIncrement = 1.10f;
 
         switch (i)
         {
             case 0:
                 upgrade[i] -= 0.1f;
+                rank[i] += 1;
                 break;
             case 1:
                 upgrade[i] += 1;
+                rank[i] += 1;
+                break;
+            case 2:
+                upgrade[i] += 10;
+                rank[i] += 1;
+                priceIncrement = 2;
                 break;
             default:
                 Debug.Log("Error");
                 break;
         }
+        price[i] *= priceIncrement;
     }
 }

@@ -16,6 +16,8 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     private Text price;
     [SerializeField]
     private Text description;
+    [SerializeField]
+    private Slider[] slider;
 
     private AudioSource sound;
 
@@ -26,7 +28,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     public DrillPartScript selectedDrill;
 
     void Start () {
-        
     }
 	
 	void Update () {
@@ -36,6 +37,14 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         {
             price.text = PlayerClass.formatValue(selectedDrill.price[(int)currentButton.buttonIndex]);
             description.text = currentButton.description;
+
+            slider[(int)currentButton.buttonIndex].value = selectedDrill.rank[(int)currentButton.buttonIndex];
+
+            for (int i = 0; i < slider.Length - 1; i++)
+            {
+                slider[i].maxValue = selectedDrill.upgrade[2];
+            }
+            slider[2].maxValue = PlayerClass.drillTierMax;
         }
     }
 
@@ -47,7 +56,6 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
     public void updateName()
     {
         selectedDrill.drillName = nameText.text;
-        sound.Play();
     }
 
     public void ExitPress()
@@ -60,28 +68,15 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         currentButton = button;
     }
 
-    /*public void BuildDronePress()
+    public void OnHover(ButtonDrill buttonValues)
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            int amountPresses = 0;
-            float totalValue = selectedDrill.upgradeCost;
-            while (PlayerClass.credits > totalValue && amountPresses < 10)
-            {
-                amountPresses++;
-                totalValue += selectedDrill.upgradeCost * Mathf.Pow(1.15f, amountPresses);
-            }
-            for (int i = 0; i < amountPresses; i++)
-            {
-                purchaseUpgrade(selectedDrill.upgradeCost, "Efficiency");
-            }
-        }
-        else
-        {
-            purchaseUpgrade(selectedDrill.upgradeCost, "Efficiency");
-        }
-    }*/
+        Debug.Log("Hover");
+    }
 
+    public void OnExit()
+    {
+
+    }
     /*public void EfficiencyPress()
     {
         if (Input.GetKey(KeyCode.LeftShift))
@@ -161,13 +156,4 @@ public class MiningdrillUpgradeMenu : MonoBehaviour {
         }
         PlayerClass.credits -= price;
     }*/
-    
-    public void OnHover(ButtonDrill buttonValues)
-    {
-        Debug.Log("Hover");
-        //mats.text = "Material : " + PlayerClass.formatValue(PlayerClass.credits);
-    }
-    public void OnExit()
-    {
-    }
 }

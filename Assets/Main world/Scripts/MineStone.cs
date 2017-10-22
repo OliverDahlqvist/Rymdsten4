@@ -2,7 +2,7 @@
 using UnityStandardAssets.ImageEffects;
 
 public class MineStone : MonoBehaviour {
-    Camera camera;
+    Camera cameraMain;
     GameObject forgeDoor;
     ForgeAnimationScript forgeAnimationScript;
 
@@ -54,13 +54,13 @@ public class MineStone : MonoBehaviour {
         //PlayerClass.displayNotification = false;
         PlayerClass.textValue = 0f;
         forgeDoor = GameObject.FindWithTag("DropOff");
-        camera = GetComponent<Camera>();             
+        cameraMain = GetComponent<Camera>();             
 		PlayerClass.stones = 0; 
 		pickStonePerHit = 10F;
         transferMultiplier = 0;
  
         forgeAnimationScript = forgeDoor.GetComponentInParent<ForgeAnimationScript>();
-        cameraShake = GetComponent<CameraShake>();
+        cameraShake = GetComponentInChildren<CameraShake>();
         laserBeam = GetComponentInChildren<LaserSway>(true).gameObject;
 
         hitStone = false;
@@ -77,7 +77,7 @@ public class MineStone : MonoBehaviour {
         forgeAnimationScript.openDoor = false;
         if (Input.GetKey(KeyCode.E) && PlayerClass.menuActive < 1)
         {
-            Ray ray = camera.ScreenPointToRay(new Vector3(x, y, 0));
+            Ray ray = cameraMain.ScreenPointToRay(new Vector3(x, y, 0));
             if (Physics.Raycast(ray, out hit, 2))
             {
                 if (hit.collider.gameObject.GetComponentInParent<ForgeAnimationScript>() && PlayerClass.stones - perc > 0)
@@ -116,7 +116,7 @@ public class MineStone : MonoBehaviour {
         //MiningDrill Menu
         if(Input.GetKeyDown(KeyCode.E) && PlayerClass.menuActive < 1)
         {
-            Ray ray = camera.ScreenPointToRay(new Vector3(x, y, 0));
+            Ray ray = cameraMain.ScreenPointToRay(new Vector3(x, y, 0));
             if (Physics.Raycast(ray, out hit, 2))
             {
                 if (hit.collider.gameObject.CompareTag("MiningDrill"))
@@ -144,7 +144,7 @@ public class MineStone : MonoBehaviour {
 
             if (!PlayerClass.laserSelected)
             {
-                ray = camera.ScreenPointToRay(new Vector3(x, y, 0));
+                ray = cameraMain.ScreenPointToRay(new Vector3(x, y, 0));
             }
             else
             {
@@ -196,10 +196,7 @@ public class MineStone : MonoBehaviour {
                                     Instantiate(laserSparks, hit.point, Quaternion.LookRotation(hit.normal));
                                     Instantiate(laserImpact, hit.point, Quaternion.LookRotation(hit.normal));
                                 }
-                                if(cameraShake.shakeDuration < 1f)
-                                {
-                                    cameraShake.shakeDuration += 0.2f;
-                                }
+                                cameraShake.AddShake(0.2f);
                             }
                             if (Mathf.Floor(stoneHit.amountStones) <= 0)
                             {

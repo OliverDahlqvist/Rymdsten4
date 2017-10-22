@@ -30,6 +30,8 @@ public class Stone : MonoBehaviour {
     [SerializeField]
     private float stoneAmountMultiplier;
 
+    public GameObject destroyedVersion;
+
     Color orgColor;
 
     void Start () {
@@ -57,6 +59,10 @@ public class Stone : MonoBehaviour {
         if (destroyObject && !respawn)
         {
             col.enabled = false;
+            /*if (destroyedVersion != null)
+            {
+                Instantiate(destroyedVersion, transform.position, Quaternion.Euler(0, Random.Range(0, 360), 0));
+            }*/
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i] -= vertices[i].normalized / 50;
@@ -65,7 +71,7 @@ public class Stone : MonoBehaviour {
             speed += Time.deltaTime;
             if (speed > 1f)
             {
-                GameObject impact = Instantiate(PS_Impact, transform.position, Quaternion.identity);
+                //GameObject impact = Instantiate(PS_Impact, transform.position, Quaternion.identity);
                 //Destroy(this.gameObject);
                 rend.enabled = false;
                 obstacle.enabled = false;
@@ -74,6 +80,10 @@ public class Stone : MonoBehaviour {
                 
                 speed = 0;
             }
+            /*rend.enabled = false;
+            obstacle.enabled = false;
+            respawn = true;*/
+
             if (changeColor)
             {
                 rend.material.SetColor("_Color", Color.Lerp(orgColor, new Color(0, 0, 0, 0), speed));

@@ -25,37 +25,18 @@ public static class PlayerClass
 
     // BASE //
 
-    public static float power = 0;
-    public static float maxPower = 10000;
-
-
     // Items Found //
-    public static bool sonicForceFound = false;
-    public static bool jetPackFound = false;
-    public static bool laserDrillFound = true;
-    public static bool CarRepairPartFound = false;
-
-    public static bool JetpackBuilt = true;
     public static bool laserDrillBuilt = false;
-    public static bool elevatorBatteryFound = false;
 
     // Built/Repaired //
-    public static bool CarRepaired = false;
-    public static bool elevatorBatteryPlaced = false;
-    public static bool blackHolePickBuilt = false;
-    public static bool SunEaterBought = false;
-
     public static bool duringDay;   // = true when daylight, else false
     public static bool duringNight; // = true when nighttime, else false
 
-
-
-    public static int ComRepairPart = 0;
-
     // Drills //
     public static int amountDrills = 0;
-    public static string selectedDrillName;
     public static float globalTickRate = 1;
+    public static int drillTierMax = 3;
+
 
     // Cargo Drones //
     public static int amountCargoDrones = 0;
@@ -101,43 +82,35 @@ public static class PlayerClass
 
     public static string formatValue(float value)
     {
-        string textValue;
+        
         if (value >= 1000000000000000)
         {
-            return textValue = (value / 1000000000000000).ToString("F2") + "Q";
+            return (value / 1000000000000000).ToString("F2") + "Q";
         }
         else if (value >= 1000000000000)
         {
-            return textValue = (value / 1000000000000).ToString("F2") + "T";
+            return  (value / 1000000000000).ToString("F2") + "T";
         }
         else if (value >= 1000000000)
         {
-            return textValue = (value / 1000000000).ToString("F2") + "B";
+            return  (value / 1000000000).ToString("F2") + "B";
         }
         else if (value >= 1000000)
         {
-            return textValue = (value / 1000000).ToString("F2") + "M";
+            return (value / 1000000).ToString("F2") + "M";
         }
         else if (value >= 10000)
         {
-            return textValue = (value / 1000).ToString("F1") + "K";
+            return (value / 1000).ToString("F1") + "K";
         }
         else if (value >= 1000)
         {
-            return textValue = (value / 1000).ToString("F2") + "K";
+            return (value / 1000).ToString("F2") + "K";
         }
         else if (value >= 0)
         {
-            return textValue = Mathf.Floor(value).ToString();
+            return Mathf.Floor(value).ToString();
         }
         return "Value could not be reformated";
     }
-    /*
-	public static stones = 0;
-	public static upgradeCostPick = 10F;
-	public static upgradeCostInventory = 30F;
-	public static pickStonePerHit = 10F;
-	public static inventorySize = 100;
-	public static credits = 0;
-*/
 }

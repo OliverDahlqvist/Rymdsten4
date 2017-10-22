@@ -9,7 +9,6 @@ public class BuildSystem : MonoBehaviour {
     public Text priceText;
     GameObject projObject;
     ProjectionScript projVariables;
-    public PowerScript powerScript;
 
     //UIScript uiScript;
     Camera cam;

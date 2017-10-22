@@ -12,7 +12,7 @@ public class deformMesh : MonoBehaviour {
     private float maxSize;
 
     Vector3[] orgVertices;
-    MeshCollider collider;
+    MeshCollider meshCollider;
     private float delayTime;
 
     // Use this for initialization
@@ -21,7 +21,7 @@ public class deformMesh : MonoBehaviour {
         mesh = GetComponent<MeshFilter>().mesh;
 
         if (GetComponent<MeshCollider>())
-            collider = GetComponent< MeshCollider>();
+            meshCollider = GetComponent< MeshCollider>();
 
 
         vertices = mesh.vertices;
@@ -71,7 +71,7 @@ public class deformMesh : MonoBehaviour {
         mesh.vertices = vertices;
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
-        if(collider)
-            collider.sharedMesh = mesh;
+        if(meshCollider)
+            meshCollider.sharedMesh = mesh;
     }
 }

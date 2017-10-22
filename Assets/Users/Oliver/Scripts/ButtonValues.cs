@@ -63,7 +63,7 @@ public class ButtonValues : MonoBehaviour {
                 {
                     price = 1000;
                     desc = "Mining laser used for more\nefficient mining";
-                    partsFound = PlayerClass.laserDrillFound;
+                    //partsFound = PlayerClass.laserDrillFound;
                 }
                 else
                 {

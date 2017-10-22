@@ -6,58 +6,49 @@ using UnityEngine.UI;
 public class ScannerScript : MonoBehaviour {
     int x = Screen.width / 2;
     int y = Screen.height / 2;
-    RaycastHit hit;
+    public RaycastHit hit;
 
     [SerializeField]
-    Text laserDisplayText;
+    Text[] textfield;
     [SerializeField]
-    Text stoneDisplayText;
-    [SerializeField]
-    GameObject laserBeam;
+    GameObject startPosition;
 
-    MineStone mineStone;
 
-    private string displayText;
-    private string stoneText;
+    private string[] text = new string[2];
+
     private Stone stoneHit;
 
     void Start () {
-        if(laserBeam == null)
-        {
-            Debug.Log("Drag laserBeam reference to script");
-        }
-        mineStone = Camera.main.GetComponentInChildren<MineStone>();
 	}
 	
 	void Update () {
 
-        Ray ray = new Ray(laserBeam.transform.position, laserBeam.transform.forward);
+        Ray ray = new Ray(startPosition.transform.position, startPosition.transform.forward);
 
-        displayText = "--";
-        stoneText = "--";
+        for(int i = 0; i < text.Length; i++)
+        {
+            text[i] = "--";
+        }
 
         if (Physics.Raycast(ray, out hit, 30))
         {
             if (hit.collider.GetComponent<Stone>())
             {
                 stoneHit = hit.collider.GetComponent<Stone>();
-                displayText = stoneHit.objectName;
-                stoneText = PlayerClass.formatValue((stoneHit.amountStones * PlayerClass.stonesPerHitLaser));
+                text[0] = stoneHit.objectName;
+                if(text.Length > 1)
+                text[1] = PlayerClass.formatValue((stoneHit.amountStones * PlayerClass.stonesPerHitLaser));
             }
             else if (hit.collider.CompareTag("MiningDrill"))
             {
                 DrillPartScript hitDrill = hit.collider.transform.root.GetComponentInChildren<DrillPartScript>();
-                displayText = hitDrill.drillName;
-            }
-            else if (hit.collider.CompareTag("CargoDrone"))
-            {
-                CargoScript hitDrone = hit.collider.transform.root.GetComponent<CargoScript>();
-                displayText = hitDrone.name;
-                stoneText = hitDrone.inventory + "/" + hitDrone.inventoryMax;
+                text[0] = hitDrill.drillName;
             }
         }
-            
-        laserDisplayText.text = displayText;
-        stoneDisplayText.text = stoneText;
+        for(int i = 0; i < textfield.Length; i++)
+        {
+            textfield[i].text = text[i];
+        }
+
     }
 }

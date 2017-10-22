@@ -10,25 +10,45 @@ ModelImporter:
     100004: Cube_001
     100006: Center
     100008: Support
+    100010: Center_001
+    100012: Center_Ex
+    100014: Center_002
+    100016: Center_003
     400000: //RootNode
     400002: Cube
     400004: Cube_001
     400006: Center
     400008: Support
+    400010: Center_001
+    400012: Center_Ex
+    400014: Center_002
+    400016: Center_003
     2300000: //RootNode
     2300002: Cube
     2300004: Cube_001
     2300006: Center
     2300008: Support
+    2300010: Center_001
+    2300012: Center_Ex
+    2300014: Center_002
+    2300016: Center_003
     3300000: //RootNode
     3300002: Cube
     3300004: Cube_001
     3300006: Center
     3300008: Support
+    3300010: Center_001
+    3300012: Center_Ex
+    3300014: Center_002
+    3300016: Center_003
     4300000: Cube
     4300002: Cube_001
     4300004: Center
     4300006: Support
+    4300008: Center_001
+    4300010: Center_Ex
+    4300012: Center_002
+    4300014: Center_003
     7400000: Default Take
     9500000: //RootNode
   materials:

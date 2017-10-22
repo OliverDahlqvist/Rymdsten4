@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     
     Transform cameraTransform;
-    Camera camera;
+    Camera cameraMain;
     Rigidbody rigidBody;
 
     Vector3 moveAmount;
@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour {
     // Awake
     void Awake() {
         //Camera
-        camera = GameObject.FindWithTag("PlayerCamera").GetComponent<Camera>();
-        cameraTransform = camera.transform;
+        cameraMain = GameObject.FindWithTag("PlayerCamera").GetComponent<Camera>();
+        cameraTransform = cameraMain.transform;
         //Avatar
         rigidBody = GetComponent<Rigidbody>();
         //Hide cursor

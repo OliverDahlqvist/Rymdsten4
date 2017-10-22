@@ -38,7 +38,6 @@ public class UIScript : MonoBehaviour
     float lightIntensity = 1;
     float rockT = 0;
     float oxygenT = 0;
-    string warning = "";
 
     private int x = Screen.width / 2;
     private int y = Screen.height / 2;
@@ -138,7 +137,6 @@ public class UIScript : MonoBehaviour
         else if(PlayerClass.stones != PlayerClass.inventorySize && rockT > 0)
         {
             rockT -= Time.deltaTime;
-            warning = "";
             amountOre.color = rockColor;
             iconOre.color = rockColor;
         }
