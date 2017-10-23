@@ -71,7 +71,7 @@ public class Scanner : MonoBehaviour {
                     objectHit.m_light.intensity = Mathf.Lerp(1.47f, 0, scanValueCurve.Evaluate(scanValue));
                     if(scanValue >= 1)
                     {
-                        PlayerClass.credits += 100;
+                        PlayerClass.sciencePoints += objectHit.scienceValue;
                         objectHit.exhausted = true;
                     }
                 }
@@ -100,7 +100,7 @@ public class Scanner : MonoBehaviour {
             if (scanValue > 0)
                 scanValue -= Time.deltaTime / 0.1f;
 
-            scanValueTarget = "0".ToList();
+            scanValueTarget = "00".ToList();
             text[0].text = "IDLE";
             display = false;
         }

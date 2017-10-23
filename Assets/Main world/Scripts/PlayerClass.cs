@@ -10,6 +10,7 @@ public static class PlayerClass
     public static float EnergyGain = 100F;
     public static float credits = 300;
     public static float stones = 0;
+    public static float sciencePoints = 0;
     public static float CurrentEnergy = EnergyMax;
     public static float TemperatureMultipier = 1;
     public static int SprintMultiplier = 1;
