@@ -15,6 +15,9 @@ public class Scanner : MonoBehaviour {
     private AnimationCurve scanValueCurve;
     [SerializeField]
     private Transform parentTransform;
+    private AudioSource scannerAudio;
+    [SerializeField]
+    private AudioSource scannerHitAudio;
     private Vector3 parentStart;
 
     public Text[] text;
@@ -33,6 +36,7 @@ public class Scanner : MonoBehaviour {
     void Start () {
         projectionAnimator = GetComponent<Animator>();
         mainAnimator = transform.parent.GetComponentInChildren<Animator>();
+        scannerAudio = GetComponentInChildren<AudioSource>();
         parentStart = parentTransform.localPosition;
 
         display = false;
@@ -60,8 +64,11 @@ public class Scanner : MonoBehaviour {
 
                 if (!objectHit.exhausted)
                 {
+                    if (scannerHitAudio.volume < 0.225f)
+                        scannerHitAudio.volume += Time.deltaTime / 2;
+
                     scanValue += Time.deltaTime / 2;
-                    objectHit.m_light.intensity = Mathf.Lerp(1.47f, 0, scanValue);
+                    objectHit.m_light.intensity = Mathf.Lerp(1.47f, 0, scanValueCurve.Evaluate(scanValue));
                     if(scanValue >= 1)
                     {
                         PlayerClass.credits += 100;
@@ -72,12 +79,18 @@ public class Scanner : MonoBehaviour {
                 {
                     if(scanValue > 0)
                         scanValue -= Time.deltaTime / 0.1f;
+
+                    if (scannerHitAudio.volume > 0)
+                        scannerHitAudio.volume -= Time.deltaTime;
                 }
             }
             display = true;
         }
         else
         {
+            if (scannerHitAudio.volume > 0)
+                scannerHitAudio.volume -= Time.deltaTime;
+
             if (objectHit != null)
             {
                 if (!objectHit.exhausted)
@@ -87,13 +100,14 @@ public class Scanner : MonoBehaviour {
             if (scanValue > 0)
                 scanValue -= Time.deltaTime / 0.1f;
 
-            scanValueTarget = "00".ToList();
+            scanValueTarget = "0".ToList();
             text[0].text = "IDLE";
             display = false;
         }
+
         parentTransform.localPosition = Vector3.Lerp(parentStart, new Vector3(0.67f, -0.526f, 1.671f), scanValue);
 
-        slider.value = scanValue;
+        slider.value = scanValueCurve.Evaluate(scanValue);
         if (display != projectionAnimator.GetBool("display"))
         {
             projectionAnimator.SetBool("display", display);

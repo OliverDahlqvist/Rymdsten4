@@ -39,19 +39,22 @@ public class SetParent : EditorWindow {
         }
         else
         {
-            if(selectedObjects.Length > 1)
+            if (selectedObjects != null)
             {
-                GUILayout.Label("Too many objects selected");
-            }
-            else if(selectedObjects.Length < 1)
-            {
-                GUILayout.Label("Select an object");
-            }
-            else
-            {
-                if (GUILayout.Button("Set Target", GUILayout.Height(20), GUILayout.Width(100)))
+                if (selectedObjects.Length > 1)
                 {
-                    prefabObject = selectedObjects[0];
+                    GUILayout.Label("Too many objects selected");
+                }
+                else if (selectedObjects.Length < 1)
+                {
+                    GUILayout.Label("Select an object");
+                }
+                else
+                {
+                    if (GUILayout.Button("Set Target", GUILayout.Height(20), GUILayout.Width(100)))
+                    {
+                        prefabObject = selectedObjects[0];
+                    }
                 }
             }
         }
