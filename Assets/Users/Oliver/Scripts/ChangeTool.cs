@@ -7,7 +7,7 @@ public class ChangeTool : MonoBehaviour {
     float mouseY;
     Quaternion rotationSpeed;
     public float speed;
-    private float offset;
+
     private float lerpSpeed;
 
     [HideInInspector]
@@ -82,7 +82,7 @@ public class ChangeTool : MonoBehaviour {
 
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-        rotationSpeed = Quaternion.Euler(-mouseY, offset - mouseX, 0);
+        rotationSpeed = Quaternion.Euler(-mouseY, mouseX, 0);
         activeTool.transform.localRotation = Quaternion.Slerp(activeTool.transform.localRotation, rotationSpeed, speed * Time.deltaTime);
 	}
 

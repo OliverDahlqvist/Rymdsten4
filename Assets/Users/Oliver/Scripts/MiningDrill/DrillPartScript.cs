@@ -6,7 +6,7 @@ public class DrillPartScript : MonoBehaviour {
     Animator anim;
     ParticleSystem ps;
 
-    private float drillUpdateTime = 1f;
+
     private float timestamp = 0f;
     private bool drillOn;
     public string drillName;

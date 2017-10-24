@@ -18,7 +18,8 @@ public class Mine : MonoBehaviour {
     Text notificationText;
     Animator animator;
     public AudioClip[] hitSound;
-    AudioSource audio;
+    AudioSource audioSource;
+
     private int stonesToAdd;
 
 
@@ -26,7 +27,7 @@ public class Mine : MonoBehaviour {
         animator = GetComponent<Animator>();
         mineScript = Camera.main.GetComponent<MineStone>();
         cameraShake = Camera.main.GetComponentInChildren<CameraShake>();
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	void Update () {
         if (Input.GetMouseButton(0) && PlayerClass.menuActive < 1)
@@ -53,9 +54,9 @@ public class Mine : MonoBehaviour {
             {
                 if (transform.name == "PickaxeModel")
                 {
-                    audio.clip = hitSound[Random.Range(0, hitSound.Length)];
+                    audioSource.clip = hitSound[Random.Range(0, hitSound.Length)];
                 }
-                audio.Play();
+                audioSource.Play();
                
                 mineScript.addStones = true;
                 Stone stoneHit = mineScript.rayHit;

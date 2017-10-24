@@ -30,8 +30,6 @@ public class MineStone : MonoBehaviour {
     float upgradeCostInventory;
     public float pickStonePerHit;
     private float timestamp = 0F;
-    [SerializeField]
-    private float transferMultiplier;
     private bool getCurrentPercentage;
     private float perc;
     private float lerpT;
@@ -57,7 +55,7 @@ public class MineStone : MonoBehaviour {
         cameraMain = GetComponent<Camera>();             
 		PlayerClass.stones = 0; 
 		pickStonePerHit = 10F;
-        transferMultiplier = 0;
+        perc = 0;
  
         forgeAnimationScript = forgeDoor.GetComponentInParent<ForgeAnimationScript>();
         cameraShake = GetComponentInChildren<CameraShake>();

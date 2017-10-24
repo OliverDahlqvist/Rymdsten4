@@ -16,7 +16,7 @@ public class HeadBob : MonoBehaviour {
     
     //FPSCharacter fpsCharacter;
     Vector3 originalLocalPosition;
-    float nextStepTime = 0.5f;
+
     float headBobCycle = 0f;
     float headBobFade = 0f;
     float springPosition = 0f;

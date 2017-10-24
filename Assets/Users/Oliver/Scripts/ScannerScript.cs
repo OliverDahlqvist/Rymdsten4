@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScannerScript : MonoBehaviour {
-    int x = Screen.width / 2;
-    int y = Screen.height / 2;
     public RaycastHit hit;
 
     [SerializeField]

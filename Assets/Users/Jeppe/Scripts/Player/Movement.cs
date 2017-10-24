@@ -45,16 +45,6 @@ public class Movement : MonoBehaviour {
     private float groundSlopeAngle = 0f;
     private Vector3 groundSlopeDir;
 
-    private float latestYPos = 0;
-    private float fallDist = 0;
-    [SerializeField]
-    private float fallDmgAfterSec = 0.5f;
-    [SerializeField]
-    private float dmgMulti = 10;
-    bool grounded = false;
-    float tempDmg = 100;
-    float fallCounter = 0;
-
     //_____________________________________________________
     /*enum MOVEMENT
     {

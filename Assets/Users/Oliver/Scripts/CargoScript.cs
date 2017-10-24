@@ -8,8 +8,8 @@ public class CargoScript : MonoBehaviour {
     NavMeshAgent agent;
     public GameObject dropOff;
     public GameObject drill;
-    ForgeAnimationScript forgeAnimation;
-    DrillPartScript drillScript;
+
+
     Animator anim;
     [SerializeField]
     Transform player;
@@ -34,8 +34,8 @@ public class CargoScript : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         dropOff = GameObject.FindGameObjectWithTag("Forge");
-        forgeAnimation = dropOff.GetComponent<ForgeAnimationScript>();
-        drillScript = drill.GetComponentInChildren<DrillPartScript>();
+        //forgeAnimation = dropOff.GetComponent<ForgeAnimationScript>();
+        //drillScript = drill.GetComponentInChildren<DrillPartScript>();
         anim = GetComponentsInChildren<Animator>()[1];
         agent.destination = drill.transform.position;
         canvas = transform.GetChild(0).transform.GetChild(0).transform;
@@ -44,55 +44,6 @@ public class CargoScript : MonoBehaviour {
     }
 	
 	void Update () {
-		/*if(inventory >= inventoryMax && droppingOff == false)
-        {
-            agent.destination = dropOff.transform.position;
-            droppingOff = true;
-        }*/
-
-        /*if (droppingOff)
-        {
-            distanceToTarget = Vector3.Distance(dropOff.transform.position, transform.position);
-        }
-        else
-        {
-            distanceToTarget = Vector3.Distance(drill.transform.position, transform.position);
-        }
-
-        if(distanceToTarget <= 15)
-        {
-            if (!droppingOff)
-            {
-                inventory += drillScript.drillAmount;
-                drillScript.drillAmount = 0;
-                drillScript.cargoParticles = true;
-                drillScript.targetDrill = transform;
-            }
-            else if (!PlayerClass.usingForge)
-            {
-                forgeAnimation.openDoor = true;
-                PlayerClass.credits += inventory;
-                inventory = 0;
-            }
-        }
-        else if(drillScript.cargoParticles == true)
-        {
-            drillScript.cargoParticles = false;
-        }
-
-        /*if(distanceToTarget <= 15 && !PlayerClass.usingForge && droppingOff)
-        {
-            forgeAnimation.openDoor = true;
-            PlayerClass.credits += inventory;
-            inventory = 0;
-            droppingOff = false;
-            agent.destination = drill.transform.position;
-        }
-        else if(distanceToTarget <= 15 && !droppingOff)
-        {
-            inventory += drillScript.drillAmount;
-            drillScript.drillAmount = 0;
-        }*/
         if (inventory >= inventoryMax && !droppingOff)
         {
             agent.SetDestination(dropOff.transform.position);

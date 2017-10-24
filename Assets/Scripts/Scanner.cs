@@ -15,7 +15,6 @@ public class Scanner : MonoBehaviour {
     private AnimationCurve scanValueCurve;
     [SerializeField]
     private Transform parentTransform;
-    private AudioSource scannerAudio;
     [SerializeField]
     private AudioSource scannerHitAudio;
     private Vector3 parentStart;
@@ -36,7 +35,6 @@ public class Scanner : MonoBehaviour {
     void Start () {
         projectionAnimator = GetComponent<Animator>();
         mainAnimator = transform.parent.GetComponentInChildren<Animator>();
-        scannerAudio = GetComponentInChildren<AudioSource>();
         parentStart = parentTransform.localPosition;
 
         display = false;
@@ -53,36 +51,43 @@ public class Scanner : MonoBehaviour {
 
         if (Input.GetMouseButton(0))
         {
-            if (objectHit != null)
+            if (objectHit != null)//Hit something
             {
-                if(scanValue < 1)
+                if(scanValue < 1)//Sets science points value
                 scanValueTarget = objectHit.scienceValue.ToString().ToCharArray().ToList();
                 else
                 {
                     scanValueTarget = "00".ToList();
                 }
 
-                if (!objectHit.exhausted)
+                if (!objectHit.exhausted)//SCAN; if object hit is not exhausted
                 {
-                    if (scannerHitAudio.volume < 0.225f)
-                        scannerHitAudio.volume += Time.deltaTime / 2;
+                    
+                    SetVolume(scannerHitAudio, true, 0.225f, 1);
 
                     scanValue += Time.deltaTime / 2;
                     objectHit.m_light.intensity = Mathf.Lerp(1.47f, 0, scanValueCurve.Evaluate(scanValue));
-                    if(scanValue >= 1)
+
+                    if(scanValue >= 1)//Scan complete
                     {
+
                         PlayerClass.sciencePoints += objectHit.scienceValue;
                         objectHit.exhausted = true;
                     }
                 }
-                else
+                else//If stone is hit but exhausted
                 {
                     if(scanValue > 0)
                         scanValue -= Time.deltaTime / 0.1f;
 
-                    if (scannerHitAudio.volume > 0)
-                        scannerHitAudio.volume -= Time.deltaTime;
+                    SetVolume(scannerHitAudio, false, 0, 2);
                 }
+            }
+            else//Nothing hit
+            {
+                SetVolume(scannerHitAudio, false, 0, 2);
+                text[0].text = "IDLE";
+                scanValueTarget = "00".ToList();
             }
             display = true;
         }
@@ -112,6 +117,20 @@ public class Scanner : MonoBehaviour {
         {
             projectionAnimator.SetBool("display", display);
             mainAnimator.SetBool("scanning", display);
+        }
+    }
+
+    private void SetVolume(AudioSource source, bool increase, float volume, float time)
+    {
+        if (increase)
+        {
+            if (source.volume < volume)
+                source.volume += Time.deltaTime / time;
+        }
+        else
+        {
+            if (source.volume > volume)
+                source.volume -= Time.deltaTime / time;
         }
     }
 

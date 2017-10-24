@@ -16,8 +16,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float lookSensiX = 250f;
     [SerializeField] private float lookSensiY = 250f;
     [SerializeField] private float walkSpeed = 5f;
-    [SerializeField] private float runSpeed = 10f;
-    [SerializeField] private float jumpForce = 10f;
+
 
     private float verticalLook;
 

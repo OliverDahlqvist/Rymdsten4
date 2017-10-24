@@ -11,19 +11,16 @@ public class UserInput : MonoBehaviour
     float handbrake;
     float revears;
     bool toggleDriftSystem;
-    enterVehicle vehicleScript;
 
    const string Horizontal_KEY = "Horizontal";
     const string Vertical_KEY = "Vertical";
     const string NITRO_KEY = "Fire2";
     const string HANDBRAKE_KEY = "Fire1";
     //const string DRIFT_SYSTEM_KEY = KeyCode.A;
-    bool activeNitro;
 
     
     void OnEnable()
     {
-        vehicleScript = GetComponent<enterVehicle>();
         m_Car = GetComponent<CarControl>();
     }
 
@@ -53,9 +50,6 @@ public class UserInput : MonoBehaviour
             accel = 0;
         }
         m_Car.Move(h, accel, brake, handbrake); // pass the input to the car!
-            activeNitro = Input.GetButton(NITRO_KEY);
-            /*m_Car.nitro(activeNitro);*/
-
 
        
     }

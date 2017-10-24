@@ -8,7 +8,7 @@ public class MenuInput : MonoBehaviour {
     public EventSystem eventSystem;
     public GameObject SelectedObject;
 
-    private bool ButtonSelected; 
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +26,4 @@ public class MenuInput : MonoBehaviour {
 		
 	}
 
-    private void OnDisable()
-    {
-        ButtonSelected = false; 
-    }
 }

@@ -9,7 +9,6 @@ public class ButtonDrill : MonoBehaviour {
     MiningdrillUpgradeMenu menu;
     [TextArea(1, 3)]
     public string description;
-    private float total = 11;
 
     public enum ButtonType
     {

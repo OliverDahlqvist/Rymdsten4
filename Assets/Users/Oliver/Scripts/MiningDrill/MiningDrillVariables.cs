@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MiningDrillVariables : MonoBehaviour {
     public string drillName;
-    private DrillPartScript ds;
 
-    private Renderer rend;
 
     public Color notFull;
     public Color full;
@@ -16,8 +14,8 @@ public class MiningDrillVariables : MonoBehaviour {
     public AudioClip impactSound;
 
     void Start () {
-        ds = GetComponentInChildren<DrillPartScript>();
+
         drillName = gameObject.name;
-        rend = GetComponent<Renderer>();
+
     }
 }

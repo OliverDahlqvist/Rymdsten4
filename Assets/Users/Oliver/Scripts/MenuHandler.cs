@@ -10,7 +10,7 @@ public class MenuHandler : MonoBehaviour {
     GameObject upgradeCamera;
     [SerializeField]
     GameObject miningDrillCam;
-    bool doOnce = true;
+
 
     void Start () {
         blurEffect = GameObject.FindGameObjectWithTag("UICamera").GetComponentInChildren<BlurOptimized>();

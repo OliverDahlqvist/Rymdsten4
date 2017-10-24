@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour {
 	Vector3 moveDir;
 
 	float moveSpeed;
-	float jumpSpeed;
+
 	[SerializeField] float walkSpeed = 5;
 	[SerializeField] float runSpeed = 10;
 	[SerializeField] float jumpForce = 5;
@@ -30,7 +30,6 @@ public class Controller : MonoBehaviour {
 		controller = GetComponent<CharacterController> ();
 		playerCam = gameObject.GetComponentInChildren<Camera> ();
 
-		jumpSpeed = Mathf.Sqrt(-2 * playerGravity * jumpForce) + 0.1f;
 	}
 
 	// Update

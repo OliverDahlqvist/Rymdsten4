@@ -50,8 +50,6 @@ public class UpgradeMenu : MonoBehaviour {
 
     List<GameObject> items = new List<GameObject>();
     List<ButtonValues> button = new List<ButtonValues>();
-    List<Image> images = new List<Image>();
-    List<Text> texts = new List<Text>();
 
     void Start () {
         fadeT = 0;

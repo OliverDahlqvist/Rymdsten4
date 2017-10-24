@@ -17,9 +17,11 @@ public class UIScript : MonoBehaviour
     public Text amountOre;
     public Text amountMaterial;
     public Image Visor;
+    public Text scienceText;
 
     [Header("UI Colors")]
     public Color defaultColor;
+    public Color defaultTextColor;
     public Color warningColor;
     public Color defaultColorOxygen;
     public Color ScreenColor;
@@ -29,13 +31,13 @@ public class UIScript : MonoBehaviour
 
     [Header("Objects")]
     public Light mainLight;
-    Color rockColor;
+    Color iconColor;
     Color oxygenColor;
+    Color textColor;
     public RaycastHit hit;
 
     bool inCave = false;
     float lightT = 1;
-    float lightIntensity = 1;
     float rockT = 0;
     float oxygenT = 0;
 
@@ -126,19 +128,20 @@ public class UIScript : MonoBehaviour
             PlayerClass.CurrentEnergy = PlayerClass.EnergyMax;
         }
 
-        rockColor = Color.Lerp(defaultColor, warningColor, rockT);
+        iconColor = Color.Lerp(defaultColor, warningColor, rockT);
+        textColor = Color.Lerp(defaultTextColor, warningColor, rockT);
         oxygenColor = Color.Lerp(defaultColorOxygen, warningColor, oxygenT);
         if(PlayerClass.stones == PlayerClass.inventorySize && rockT < 1)
         {
             rockT += Time.deltaTime;
-            amountOre.color = rockColor;
-            iconOre.color = rockColor;
+            amountOre.color = textColor;
+            iconOre.color = iconColor;
         }
         else if(PlayerClass.stones != PlayerClass.inventorySize && rockT > 0)
         {
             rockT -= Time.deltaTime;
-            amountOre.color = rockColor;
-            iconOre.color = rockColor;
+            amountOre.color = textColor;
+            iconOre.color = iconColor;
         }
         if(oxygenSlider.value <= 20 && oxygenT < 1)
         {
@@ -158,7 +161,8 @@ public class UIScript : MonoBehaviour
 
         oxygenSlider.maxValue = PlayerClass.EnergyMax;
 
-        oxygenText.text = oxygenSlider.value + "%"; //Updates the text by the energy slider
+        oxygenText.text = oxygenSlider.value.ToString("F1") + "%"; //Updates the text by the energy slider
+        scienceText.text = PlayerClass.sciencePoints.ToString("F0");
     }
 }
 

@@ -67,7 +67,6 @@ public class BuildSystem : MonoBehaviour {
                 {
                     projVariables.clear = false;
                     text = "Too steep";
-                    Debug.Log(text + ": Too steep");
                     PlayerClass.notificationText = text;
                     PlayerClass.displayNotification = true;
                 }

@@ -19,7 +19,7 @@ public class StateController : MonoBehaviour {
 	public float jetForce = 0.3f;
 
 	private float speedSmoothVelocity;
-	private float speedTransitionTime;
+
 
 	Vector3 inputDir;
 	Vector3 moveDir;
@@ -64,7 +64,7 @@ public class StateController : MonoBehaviour {
 		moveY = Input.GetAxis ("Vertical");
 
 		inputDir = new Vector3 (moveX, yVelocity, moveY);
-		currentSpeed = Mathf.SmoothDamp (currentSpeed, moveSpeed, ref speedSmoothVelocity, speedTransitionTime);
+		//currentSpeed = Mathf.SmoothDamp (currentSpeed, moveSpeed, ref speedSmoothVelocity, speedTransitionTime);
 		moveDir = transform.rotation * inputDir * currentSpeed;
 
 		moveDir.y -= gravity * Time.deltaTime;

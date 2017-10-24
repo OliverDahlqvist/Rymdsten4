@@ -9,7 +9,6 @@ public class MiningRobot : MonoBehaviour {
     float rotT = 0;
     private RaycastHit hit;
 
-    float rotateSpeed = 1f;
     private float timestamp = 0F;
     public float delay = 0.4f;
 
